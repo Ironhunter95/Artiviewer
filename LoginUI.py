@@ -1,5 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import gspread
+from PyQt5.QtWidgets import QMessageBox
+from oauth2client.service_account import ServiceAccountCredentials
+import hashlib
 
 class Ui_LoginWindow(object):
     def setupUi(self, LoginWindow):
@@ -150,13 +153,13 @@ class Ui_LoginWindow(object):
         self.label_7.setFont(font)
         self.label_7.setStyleSheet("color: rgb(255, 255, 255);")
         self.label_7.setObjectName("label_7")
-        self.forgotPasswordButtonr = QtWidgets.QPushButton(self.centralwidget)
-        self.forgotPasswordButtonr.setGeometry(QtCore.QRect(22, 407, 121, 21))
+        self.forgotPasswordButton = QtWidgets.QPushButton(self.centralwidget)
+        self.forgotPasswordButton.setGeometry(QtCore.QRect(22, 407, 121, 21))
         font = QtGui.QFont()
         font.setPointSize(6)
         font.setKerning(True)
-        self.forgotPasswordButtonr.setFont(font)
-        self.forgotPasswordButtonr.setStyleSheet("QPushButton{\n"
+        self.forgotPasswordButton.setFont(font)
+        self.forgotPasswordButton.setStyleSheet("QPushButton{\n"
 "border-color: rgb(233, 151, 0);\n"
 "border:none;\n"
 "bordder-radius:12px;\n"
@@ -166,7 +169,8 @@ class Ui_LoginWindow(object):
 "color: rgb(233,151,0)\n"
 "}")
         self.exit.clicked.connect(self.close)
-        self.forgotPasswordButtonr.setObjectName("forgotPasswordButtonr")
+        self.loginButton.clicked.connect(lambda: self.checkDetails("Hi"))
+        self.forgotPasswordButton.setObjectName("forgotPasswordButton")
         LoginWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(LoginWindow)
@@ -184,7 +188,64 @@ class Ui_LoginWindow(object):
         self.exit.setText(_translate("LoginWindow", "X"))
         self.registerButton.setText(_translate("LoginWindow", "Register now"))
         self.label_7.setText(_translate("LoginWindow", "New to Artiviewer?"))
-        self.forgotPasswordButtonr.setText(_translate("LoginWindow", "Forgot password?"))
+        self.forgotPasswordButton.setText(_translate("LoginWindow", "Forgot password?"))
+
+    def checkDetails(self, _str):
+        usernameexist = True
+        passwordexist = True
+        errorBox = QMessageBox()
+        if self.usernameField.toPlainText() == '':
+            usernameexist = False
+        if self.passwordField.text() == '':
+            passwordexist = False
+        if not usernameexist and passwordexist:
+            errorBox.setWindowTitle("Error")
+            errorBox.setText("Username field cannot be empty")
+            errorBox.setIcon(QMessageBox.Critical)
+            show = errorBox.exec_()
+        elif usernameexist and not passwordexist:
+            errorBox.setWindowTitle("Error")
+            errorBox.setText("Password field cannot be empty")
+            errorBox.setIcon(QMessageBox.Critical)
+            show = errorBox.exec_()
+        elif not usernameexist and not passwordexist:
+            errorBox.setWindowTitle("Error")
+            errorBox.setText("Username and password fields cannot be empty")
+            errorBox.setIcon(QMessageBox.Critical)
+            show = errorBox.exec_()
+        else:
+            userfound = False
+            scope = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
+                     "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
+            creds = ServiceAccountCredentials.from_json_keyfile_name("GoogleCreds.json", scope)
+            client = gspread.authorize(creds)
+            Sheet = client.open("User Accounts").sheet1
+            UsernameList = Sheet.col_values(1)
+            username = self.usernameField.toPlainText()
+            # Loop to check if username exists
+            for index, user in enumerate(UsernameList):
+                if (user == username):
+                    userfound = True
+                    hashedpassword = Sheet.cell(index + 1, 2).value
+                    password = self.passwordField.text()
+                    password= password.encode("utf-8")
+                    password=hashlib.md5(password)
+                    password=password.hexdigest()
+                    if (hashedpassword == password):
+                        errorBox.setWindowTitle("Success")
+                        errorBox.setText("Access Granted")
+                        errorBox.setIcon(QMessageBox.Information)
+                        show = errorBox.exec_()
+                    else:
+                        errorBox.setWindowTitle("Error")
+                        errorBox.setText("Incorrect Password")
+                        errorBox.setIcon(QMessageBox.Warning)
+                        show = errorBox.exec_()
+            if (userfound == False):
+                errorBox.setWindowTitle("Error")
+                errorBox.setText("Username not found, please make sure that you typed it in correctly or Register now if you do not have an account")
+                errorBox.setIcon(QMessageBox.Warning)
+                show = errorBox.exec_()
 
 
 if __name__ == "__main__":
