@@ -282,6 +282,7 @@ class Ui_RegisterWindow(object):
                 emailList = Sheet.col_values(3)
                 username = self.usernameField.toPlainText()
                 email = self.emailField.toPlainText()
+                email = email.lower()
                 if username in UsernameList:
                     errorBox.setWindowTitle("Error")
                     errorBox.setText(
@@ -301,6 +302,12 @@ class Ui_RegisterWindow(object):
                     password = password.hexdigest()
                     insertDetails = [username, password, email]
                     Sheet.insert_row(insertDetails, 2)
+                    errorBox.setWindowTitle("Success")
+                    errorBox.setText(
+                        "Your account has been created, you will now be taken back to the login screen to login")
+                    errorBox.setIcon(QMessageBox.Information)
+                    show = errorBox.exec_()
+                    self.Login()
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     RegisterWindow = QtWidgets.QMainWindow()
