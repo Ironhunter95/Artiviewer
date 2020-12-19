@@ -6,7 +6,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 from oauth2client.service_account import ServiceAccountCredentials
 
-import LoginUI
+import Login
 
 class Ui_RegisterWindow(object):
     def setupUi(self, RegisterWindow):
@@ -228,7 +228,7 @@ class Ui_RegisterWindow(object):
         app.quit()
     def Login(self):
         self.window = QtWidgets.QMainWindow()
-        self.ui = LoginUI.Ui_LoginWindow()
+        self.ui = Login.Ui_LoginWindow()
         self.ui.setupUi(self.window)
         RegisterWindow.close()
         self.window.show()
