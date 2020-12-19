@@ -170,7 +170,7 @@ class Ui_LoginWindow(object):
 "color: rgb(233,151,0)\n"
 "}")
         self.exit.clicked.connect(self.close)
-        self.loginButton.clicked.connect(lambda: self.checkDetails(""))
+        self.loginButton.clicked.connect(self.checkDetails)
         self.registerButton.clicked.connect(self.Register)
         self.forgotPasswordButton.setObjectName("forgotPasswordButton")
         LoginWindow.setCentralWidget(self.centralwidget)
@@ -200,7 +200,7 @@ class Ui_LoginWindow(object):
 
 
 
-    def checkDetails(self, _str):
+    def checkDetails(self):
         usernameexist = True
         passwordexist = True
         errorBox = QMessageBox()
