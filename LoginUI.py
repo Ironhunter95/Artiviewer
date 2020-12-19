@@ -3,6 +3,7 @@ import gspread
 from PyQt5.QtWidgets import QMessageBox
 from oauth2client.service_account import ServiceAccountCredentials
 import hashlib
+import Register
 
 class Ui_LoginWindow(object):
     def setupUi(self, LoginWindow):
@@ -169,7 +170,8 @@ class Ui_LoginWindow(object):
 "color: rgb(233,151,0)\n"
 "}")
         self.exit.clicked.connect(self.close)
-        self.loginButton.clicked.connect(lambda: self.checkDetails("Hi"))
+        self.loginButton.clicked.connect(lambda: self.checkDetails(""))
+        self.registerButton.clicked.connect(self.Register)
         self.forgotPasswordButton.setObjectName("forgotPasswordButton")
         LoginWindow.setCentralWidget(self.centralwidget)
 
@@ -177,6 +179,12 @@ class Ui_LoginWindow(object):
         QtCore.QMetaObject.connectSlotsByName(LoginWindow)
     def close(self):
         app.quit()
+    def Register(self):
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Register.Ui_RegisterWindow()
+        self.ui.setupUi(self.window)
+        LoginWindow.close()
+        self.window.show()
     def retranslateUi(self, LoginWindow):
         _translate = QtCore.QCoreApplication.translate
         LoginWindow.setWindowTitle(_translate("LoginWindow", "Login - Artiviewer "))
@@ -189,6 +197,8 @@ class Ui_LoginWindow(object):
         self.registerButton.setText(_translate("LoginWindow", "Register now"))
         self.label_7.setText(_translate("LoginWindow", "New to Artiviewer?"))
         self.forgotPasswordButton.setText(_translate("LoginWindow", "Forgot password?"))
+
+
 
     def checkDetails(self, _str):
         usernameexist = True
