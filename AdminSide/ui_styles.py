@@ -28,8 +28,8 @@ class Style():
         border-left: 28px solid rgb(33, 37, 43);
     }
     QPushButton:pressed {
-        background-color: rgb(85, 170, 255);
-        border-left: 28px solid rgb(85, 170, 255);
+        background-color: rgb(233, 151, 0);
+        border-left: 28px solid rgb(233, 151, 0);
     }
     """
     )

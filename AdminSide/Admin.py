@@ -31,8 +31,8 @@ class MainWindow(QMainWindow):
         ## ==> END ##
 
         ## SET ==> WINDOW TITLE
-        self.setWindowTitle('Main Window - Python Base')
-        UIFunctions.labelTitle(self, 'Main Window - Python Base')
+        self.setWindowTitle('Artiviewer - Admin')
+        UIFunctions.labelTitle(self, 'Artiviewer - Admin')
         UIFunctions.labelDescription(self, 'Set text')
         ## ==> END ##
 
