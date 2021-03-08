@@ -230,7 +230,7 @@ class Ui_RegisterWindow(object):
         self.window = QtWidgets.QMainWindow()
         self.ui = Login.Ui_LoginWindow()
         self.ui.setupUi(self.window)
-        RegisterWindow.close()
+        RegisterWindow.hide()
         self.window.show()
     def checkRegDetails(self, _str):
         usernameExist = True
