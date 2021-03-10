@@ -724,13 +724,19 @@ class Ui_MainWindow(object):
             self.Interviewbutton.setObjectName('Interview%d' % objectnum)
             self.Interviewbutton.setGeometry(QRect(x, y, 180, 121))
             self.Interviewbutton.setStyleSheet(u"QPushButton {font: 75 14pt \"MS Shell Dlg 2\";\n"
-" text-align: left;\n"
+" text-align: center;\n"
+"padding: 20px;\n"
 "border-color: rgb(233, 151, 0);\n"
 "border :3px solid white;}\n"
 "QPushButton:Pressed{\n"
 "border :3px solid orange;\n"
 "}")
-            self.Interviewbutton.setText(iv)
+            bname = iv.split()
+            buttonname=""
+            for name in bname:
+                buttonname+=name
+                buttonname+="\n"
+            self.Interviewbutton.setText(buttonname)
             self.Interviewbutton.clicked.connect(partial(self.interview_click, self.Interviewbutton.objectName()))
             buttons.append(self.Interviewbutton)
             x+=200
