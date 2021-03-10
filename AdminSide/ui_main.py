@@ -388,10 +388,7 @@ class Ui_MainWindow(object):
 "}")
 
         self.verticalLayout_3.addWidget(self.btn_toggle_menu)
-
-
         self.horizontalLayout_3.addWidget(self.frame_toggle)
-
         self.frame_top_right = QFrame(self.frame_top)
         self.frame_top_right.setObjectName(u"frame_top_right")
         self.frame_top_right.setStyleSheet(u"background: transparent;")
@@ -681,6 +678,7 @@ class Ui_MainWindow(object):
         self.stackedWidget = QStackedWidget(self.frame_content)
         self.stackedWidget.setObjectName(u"stackedWidget")
         self.stackedWidget.setStyleSheet(u"background: transparent;")
+        #Home page
         self.page_home = QWidget()
         self.page_home.setObjectName(u"page_home")
         self.verticalLayout_10 = QVBoxLayout(self.page_home)
@@ -690,12 +688,11 @@ class Ui_MainWindow(object):
         font5 = QFont()
         font5.setFamily(u"Segoe UI")
         font5.setPointSize(40)
+
         self.label_6.setFont(font5)
         self.label_6.setStyleSheet(u"")
         self.label_6.setAlignment(Qt.AlignCenter)
-
         self.verticalLayout_10.addWidget(self.label_6)
-
         self.label = QLabel(self.page_home)
         self.label.setObjectName(u"label")
         font6 = QFont()
@@ -703,9 +700,7 @@ class Ui_MainWindow(object):
         font6.setPointSize(14)
         self.label.setFont(font6)
         self.label.setAlignment(Qt.AlignCenter)
-
         self.verticalLayout_10.addWidget(self.label)
-
         self.label_7 = QLabel(self.page_home)
         self.label_7.setObjectName(u"label_7")
         font7 = QFont()
@@ -713,10 +708,28 @@ class Ui_MainWindow(object):
         font7.setPointSize(15)
         self.label_7.setFont(font7)
         self.label_7.setAlignment(Qt.AlignCenter)
-
         self.verticalLayout_10.addWidget(self.label_7)
-
         self.stackedWidget.addWidget(self.page_home)
+
+        # Frame
+        self.frame_11 = QFrame(self.page_home)
+        self.frame_11.setObjectName(u"frame_2")
+        self.frame_11.setMinimumSize(QSize(300, 300))
+        self.frame_11.setStyleSheet(u"background-color: rgb(39, 44, 54);\n"
+                                    "border-radius: 5px;")
+        self.frame_11.setFrameShape(QFrame.StyledPanel)
+        self.frame_11.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_10.addWidget(self.frame_11)
+        # End Frame
+        self.createInterview = QPushButton(self.frame_11)
+        self.createInterview.setObjectName(u"createInterview")
+        self.createInterview.setGeometry(QRect(80, 70, 201, 121))
+        self.createInterview.setStyleSheet(u"QPushButton{\n"
+                                           "border-image:url(C:/Users/Mohammed Saber/Desktop/Cardiff/Developement Project/createinterview.png);}\n"
+                                           "QPushButton:Pressed{\n"
+                                           "border-image:url(C:/Users/Mohammed Saber/Desktop/Cardiff/Developement Project/createinterviewpressed.png);}")
+
+        #Settings page
         self.page_widgets = QWidget()
         self.page_widgets.setObjectName(u"page_widgets")
         self.verticalLayout_6 = QVBoxLayout(self.page_widgets)
@@ -755,12 +768,8 @@ class Ui_MainWindow(object):
         self.labelBoxBlenderInstalation.setObjectName(u"labelBoxBlenderInstalation")
         self.labelBoxBlenderInstalation.setFont(font1)
         self.labelBoxBlenderInstalation.setStyleSheet(u"")
-
         self.verticalLayout_8.addWidget(self.labelBoxBlenderInstalation)
-
-
         self.verticalLayout_7.addWidget(self.frame_title_wid_1)
-
         self.frame_content_wid_1 = QFrame(self.frame_div_content_1)
         self.frame_content_wid_1.setObjectName(u"frame_content_wid_1")
         self.frame_content_wid_1.setFrameShape(QFrame.NoFrame)
@@ -1299,12 +1308,14 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(tooltip)
         self.btn_close.setToolTip(QCoreApplication.translate("MainWindow", u"Close", None))
 #endif // QT_CONFIG(tooltip)
+        self.createInterview.setToolTip(
+            QCoreApplication.translate("Form", u"<html><head/><body><p>Add a new Interview</p></body></html>", None))
         self.btn_close.setText("")
         self.label_top_info_1.setText(QCoreApplication.translate("MainWindow", u"C:\\Program Files\\Blender Foundation\\Blender 2.82", None))
         self.label_top_info_2.setText(QCoreApplication.translate("MainWindow", u"| HOME", None))
         self.label_user_icon.setText(QCoreApplication.translate("MainWindow", u"WM", None))
-        self.label_6.setText(QCoreApplication.translate("MainWindow", u"HOME", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Homme screen, interviews appear here", None))
+        self.label_6.setText(QCoreApplication.translate("MainWindow", u"Active Interview", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Home screen, interviews appear here", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"Page Index 0", None))
         self.labelBoxBlenderInstalation.setText(QCoreApplication.translate("MainWindow", u"BLENDER INSTALLATION", None))
         self.lineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Your Password", None))

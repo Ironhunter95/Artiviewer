@@ -33,7 +33,7 @@ class MainWindow(QMainWindow):
         ## SET ==> WINDOW TITLE
         self.setWindowTitle('Artiviewer - Admin')
         UIFunctions.labelTitle(self, 'Artiviewer - Admin')
-        UIFunctions.labelDescription(self, 'Set text')
+        UIFunctions.labelDescription(self, 'Admin')
         ## ==> END ##
 
         ## WINDOW SIZE ==> DEFAULT SIZE
