@@ -1,9 +1,13 @@
+from functools import partial
+
 from PySide2.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
     QRect, QSize, QUrl, Qt)
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
     QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
     QRadialGradient)
 from PySide2.QtWidgets import *
+from oauth2client.service_account import ServiceAccountCredentials
+import gspread
 
 import files_rc
 
@@ -705,10 +709,37 @@ class Ui_MainWindow(object):
         self.frame_11.setFrameShadow(QFrame.Raised)
         self.verticalLayout_10.addWidget(self.frame_11)
         # End Frame
+        x,y = 20 ,20
+        scope = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
+                 "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
+        creds = ServiceAccountCredentials.from_json_keyfile_name("GoogleCreds.json", scope)
+        client = gspread.authorize(creds)
+        Sheet = client.open("Active Interviews").sheet1
+        Interviews = Sheet.col_values(2)
+        Interviews = Interviews[1:]
+        buttons = []
+        objectnum= 0
+        for iv in Interviews:
+            self.Interviewbutton = QPushButton(self.frame_11)
+            self.Interviewbutton.setObjectName('Interview%d' % objectnum)
+            self.Interviewbutton.setGeometry(QRect(x, y, 180, 121))
+            self.Interviewbutton.setStyleSheet(u"QPushButton {font: 75 14pt \"MS Shell Dlg 2\";\n"
+" text-align: left;\n"
+"border-color: rgb(233, 151, 0);\n"
+"border :3px solid white;}\n"
+"QPushButton:Pressed{\n"
+"border :3px solid orange;\n"
+"}")
+            self.Interviewbutton.setText(iv)
+            self.Interviewbutton.clicked.connect(partial(self.interview_click, self.Interviewbutton.objectName()))
+            buttons.append(self.Interviewbutton)
+            x+=200
+            objectnum+=1
 
+        #Add new interview Button
         self.createInterview = QPushButton(self.frame_11)
         self.createInterview.setObjectName(u"createInterview")
-        self.createInterview.setGeometry(QRect(20, 20, 180, 121))  #X,Y,W,H
+        self.createInterview.setGeometry(QRect(x, y, 180, 121))  #X,Y,W,H
         self.createInterview.setStyleSheet(u"QPushButton{\n"
                                            "border-image:url(C:/Users/Mohammed Saber/Desktop/Cardiff/Developement Project/createinterview.png);}\n"
                                            "QPushButton:Pressed{\n"
@@ -1278,7 +1309,8 @@ class Ui_MainWindow(object):
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
-
+    def interview_click(self,buttonName):
+        print(buttonName)
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.btn_toggle_menu.setText("")
