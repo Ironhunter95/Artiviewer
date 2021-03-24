@@ -789,6 +789,25 @@ class Ui_MainWindow(object):
                                            "border-image:url(C:/Users/Mohammed Saber/Desktop/Cardiff/Developement Project/createinterview.png);}\n"
                                            "QPushButton:Pressed{\n"
                                            "border-image:url(C:/Users/Mohammed Saber/Desktop/Cardiff/Developement Project/createinterviewpressed.png);}")
+        self.createInterview.clicked.connect(self.createNewInterview)
+
+        # Create Interview Page
+        self.page_createInterview = QWidget()
+        self.page_createInterview.setObjectName(u"page_createInterview")
+        self.verticalLayout_103 = QVBoxLayout(self.page_createInterview)
+        self.verticalLayout_103.setObjectName(u"verticalLayout_103")
+        self.label_63 = QLabel(self.page_createInterview)
+        self.label_63.setObjectName(u"label_63")
+        self.label_63.setText("Create new Interview")
+        font5 = QFont()
+        font5.setFamily(u"Segoe UI")
+        font5.setPointSize(30)
+
+        self.label_63.setFont(font5)
+        self.label_63.setStyleSheet(u"")
+        self.label_63.setAlignment(Qt.AlignLeft)
+        self.verticalLayout_103.addWidget(self.label_63)
+        self.stackedWidget.addWidget(self.page_createInterview)
 
         #Dashboard
         self.page_dashboard = QWidget()
@@ -1441,6 +1460,10 @@ class Ui_MainWindow(object):
         self.label_top_info_2.setText(QCoreApplication.translate("MainWindow", u"| Dashboard", None))
         self.sheetname =interviewname
         print(self.sheetname)
+
+    def createNewInterview(self):
+        self.stackedWidget.setCurrentWidget(self.page_createInterview)
+        self.label_top_info_2.setText(QCoreApplication.translate("MainWindow", u"| Create New Interview", None))
     def drilldownclick(self, clientname):
         print(clientname)
     def retranslateUi(self, MainWindow):
@@ -1462,7 +1485,7 @@ class Ui_MainWindow(object):
             QCoreApplication.translate("Form", u"<html><head/><body><p>Add a new Interview</p></body></html>", None))
         self.btn_close.setText("")
         self.label_top_info_1.setText(QCoreApplication.translate("MainWindow", u"C:\\Program Files\\Blender Foundation\\Blender 2.82", None))
-        self.label_top_info_2.setText(QCoreApplication.translate("MainWindow", u"| HOME", None))
+        self.label_top_info_2.setText(QCoreApplication.translate("MainWindow", u"| Home", None))
         self.label_user_icon.setText(QCoreApplication.translate("MainWindow", u"WM", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"Active Interviews", None))
         self.label_61.setText(QCoreApplication.translate("MainWindow", u"Completed Interviews", None))
