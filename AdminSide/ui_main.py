@@ -16,6 +16,7 @@ from trials2 import CollapsibleBox
 
 
 class Ui_MainWindow(object):
+    sheetname = "0-Graduate Software Developer"
     def setupUi(self, MainWindow):
         if MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
@@ -702,7 +703,40 @@ class Ui_MainWindow(object):
         self.label_6.setAlignment(Qt.AlignLeft)
         self.verticalLayout_10.addWidget(self.label_6)
         self.stackedWidget.addWidget(self.page_home)
-
+        #Refresh Button
+        self.pushButton = QPushButton(self.page_home)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setText("Refresh")
+        self.pushButton.setGeometry(QRect(400, 36, 120, 35))
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Ignored)
+        sizePolicy.setHorizontalStretch(10)
+        sizePolicy.setVerticalStretch(10)
+        sizePolicy.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
+        self.pushButton.setSizePolicy(sizePolicy)
+        self.pushButton.setMinimumSize(QSize(120, 30))
+        self.pushButton.setMaximumSize(QSize(120, 30))
+        self.pushButton.setLayoutDirection(Qt.RightToLeft)
+        self.verticalLayout_10.addWidget(self.pushButton)
+        self.pushButton.setStyleSheet(u"QPushButton{background-color:rgb(44,49,60);\n"
+                                       "color:white;\n"
+                                       "border-style:outset;\n"
+                                       "border-width:2px;\n"
+                                       "border-radius:10px;\n"
+                                       "border-color:rgb(233,151,0);\n"
+                                       "font:16px bold;}\n"
+                                       "QPushButton:Hover{background-color:rgb(64,71,88);\n"
+                                       "border-style:outset;\n"
+                                       "border-width:2px;\n"
+                                       "border-radius:10px;\n"
+                                       "border-color:rgb(233,151,0);\n"
+                                       "font:16px bold;}\n"
+                                       "QPushButton:Pressed{background-color:green;\n"
+                                       "border-style:outset;\n"
+                                       "border-width:2px;\n"
+                                       "border-radius:10px;\n"
+                                       "border-color:white;\n"
+                                       "font:16px bold;}"
+                                      )
         # Frame
         self.frame_11 = QFrame(self.page_home)
         self.frame_11.setObjectName(u"frame_2")
@@ -741,8 +775,8 @@ class Ui_MainWindow(object):
                 buttonname+=name
                 buttonname+="\n"
             self.Interviewbutton.setText(buttonname)
-            sheetname=""
-            self.Interviewbutton.clicked.connect(partial(self.interview_click, self.Interviewbutton.text()))
+            n = str(objectnum)+'-'+iv
+            self.Interviewbutton.clicked.connect(partial(self.interview_click, n))
             buttons.append(self.Interviewbutton)
             x+=200
             objectnum+=1
@@ -786,7 +820,7 @@ class Ui_MainWindow(object):
         # End Frame
         x, y = 20, 20
 
-        drilldown = client.open("0-Graduate Software Developer").sheet1
+        drilldown = client.open(self.sheetname).sheet1
         firstnames = drilldown.col_values(2)
         lastnames = drilldown.col_values(3)
         firstnames = firstnames[1:]
@@ -1402,10 +1436,10 @@ class Ui_MainWindow(object):
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
-    def interview_click(self,buttonName):
+    def interview_click(self,interviewname):
         self.stackedWidget.setCurrentWidget(self.page_dashboard)
         self.label_top_info_2.setText(QCoreApplication.translate("MainWindow", u"| Dashboard", None))
-        self.sheetname ='0-Graduate Software Developer'
+        self.sheetname =interviewname
         print(self.sheetname)
     def drilldownclick(self, clientname):
         print(clientname)
