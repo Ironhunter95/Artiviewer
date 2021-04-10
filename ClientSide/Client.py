@@ -6,16 +6,16 @@ from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTi
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
 from PySide2.QtWidgets import *
 # GUI FILE
-from Admin_ui_main import Ui_MainWindow
+from Client_ui_main import Ui_MainWindow
 
 # IMPORT QSS CUSTOM
-from Admin_ui_styles import Style
+from Client_ui_styles import Style
 
 # IMPORT FUNCTIONS
-from Admin_ui_functions import *
+from Client_ui_functions import *
 
 ## ==> APP FUNCTIONS
-from Admin_app_functions import *
+from Client_app_functions import *
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -31,9 +31,9 @@ class MainWindow(QMainWindow):
         ## ==> END ##
 
         ## SET ==> WINDOW TITLE
-        self.setWindowTitle('Artiviewer - Admin')
-        UIFunctions.labelTitle(self, 'Artiviewer - Admin')
-        UIFunctions.labelDescription(self, 'Admin')
+        self.setWindowTitle('Artiviewer - Client')
+        UIFunctions.labelTitle(self, 'Artiviewer - Client')
+        UIFunctions.labelDescription(self, 'Client')
         ## ==> END ##
 
         ## WINDOW SIZE ==> DEFAULT SIZE

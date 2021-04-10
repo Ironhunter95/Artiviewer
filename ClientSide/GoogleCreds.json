@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "artiviewer",
+  "private_key_id": "859e067dd9d1a51d7985533fb13b2721fa6f8be0",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCVYLTeHtvE6vRx\nET28zZGMZXRg+Ni8rD9+NpUs8Lbw9ynbeQwk9Catoe+iNONnI5d2AQ4ky1XOVjwd\nHHEzFBUlIv04BtF2Igzw7lZmSVDD8sC9S0e54fizjENEWJLduTcrLS2ZSSeZOnxx\ncwNCBVLv2Hj/H+sYjdueF7yioMBnxRRsU9l7xDobvXlUmh+ejj8RTrb/1vi5pYxj\n30l9Uii4cZJu/HO8nAzkWkj6sEb2dhDITHUa1sUowQlUPey71evllfxm4QY4402V\n3vjpN2zZ7xqL+QMx+iXrE7KC77NY48vWDx77mp4I2e6W+ZB649amplWpEQab2x+i\nAi4IDYqBAgMBAAECggEAAZ4WzKJIPkf5C6cPJGs+xzwWAt15o1ljep9msCI505Qp\nl4nRBYQV+HgHcJnirdbnKKJMSpO1GH3l5Wl4bwApq8mcNQNwjeHtLUgMwXYhHMNq\ng4zmzZl9KEc9jJDqTjes5EJ3UEXy2tLqTrmFxdeUP//3wh4mB+cJWMXoXK528ZNe\n2rA8QiiF1CChKcGWMcg4ngefcBXmOUijjq0EqzXIIbnCBCZEGnDruG8njpRYtyLk\nl0rAuymOEaZ8CpOawQR3y4hltIj1YPytuKY+LWwJrAdGJ94rTMmhYhh5ho5KrVNf\nuN5iqF/LbKhUKls2Au6DnqycNgOiLU9cgEGr85Ow3QKBgQDE+aqGmjUk1o+vmeKo\nW2KUzvOSo3SFgsFyROrzjw8CPTpA423fsvNtxtPTrLTUYCLlR8MjkYABxwprdGii\ng87B3Kq7H5EZl6V0sz2lH0B1AMxcywDhvdSrlMgDA9sovQ4I2B1Qn0VZIw14Fs7P\nZpslR1oQqRYnUr3Yc3Tue3fNqwKBgQDCI7+1VuBArzBy5OR0e+VrKSNrppLqypm6\nacd7APpmRKo+s0GH4OMfSbMxONqigr8B1LQd+3e/OCZQiQY69saKWadZ8/vnmWet\nW9lscIutJxLNdGBxMPR6E0AokkPVax4hqCvvRipLWRTp7bGn5Y9RWXF3ZcNAGkPx\n03btkrnkgwKBgD0b59eSh+JB3pnv9+2bTF42RkK8Cy5Qfotg7jNZsqJTNHtlE3VP\nI05vXNBSyFcK7EiNlvC19yyV/5mOp9ejZMWoHB+pj26NKXunD/zmUSz7bmtrX36p\nUg1ZPyQQUjG1VWFRCuc0QmOBCHC1Qrv9bSyHkl2Q15qjhNpeF2zVSTm5AoGAb2oq\nvDxGaHjh+h4ISh1MdWpfjIlFKX/qJ4RLWfkeuxBPD7q6MevLDIq0TtxNBRS536gd\nUlOdzlzACFoK/E3hdUasd0BBYhG04VWj+srALjgNX2GZc3xf4asol+ARE+rsmO41\ngJUo8qMGEJY77Zod3NbS+m2pVyF7us3cI82f51cCgYAetvWdEqRSn7JmubGBtuA6\nAILq0Wgtlk0vDgGv1bLBQ/dfsx6Vfn3edjCG2LZnwOGIlHiw8owPgy1UlsXLbyG/\nBr11ooThPHHQzDJ5dDhh5zET1vFihVzPRgE0kLR0fKMML1AEXLakQNYM/CSkARPI\nlOu7YtXGnt2iSqFEso+YKA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "maboukhatwa@artiviewer.iam.gserviceaccount.com",
+  "client_id": "104904549395656384329",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/maboukhatwa%40artiviewer.iam.gserviceaccount.com"
+}
