@@ -1,3 +1,4 @@
+import sys
 from functools import partial
 from random import random
 
@@ -12,7 +13,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 
 import files_rc
-from trials2 import CollapsibleBox
+from ClientSide import addInterviewForm
 
 
 class Ui_MainWindow(object):
@@ -783,6 +784,7 @@ class Ui_MainWindow(object):
 
         #Add new interview Button
         self.createInterview = QPushButton(self.frame_11)
+        self.addInterviewWindow = None
         self.createInterview.setObjectName(u"createInterview")
         self.createInterview.setGeometry(QRect(x, y, 180, 121))  #X,Y,W,H
         self.createInterview.setStyleSheet(u"QPushButton{\n"
@@ -790,24 +792,6 @@ class Ui_MainWindow(object):
                                            "QPushButton:Pressed{\n"
                                            "border-image:url(C:/Users/Mohammed Saber/Desktop/Cardiff/Developement Project/createinterviewpressed.png);}")
         self.createInterview.clicked.connect(self.createNewInterview)
-
-        # Create Interview Page
-        self.page_createInterview = QWidget()
-        self.page_createInterview.setObjectName(u"page_createInterview")
-        self.verticalLayout_103 = QVBoxLayout(self.page_createInterview)
-        self.verticalLayout_103.setObjectName(u"verticalLayout_103")
-        self.label_63 = QLabel(self.page_createInterview)
-        self.label_63.setObjectName(u"label_63")
-        self.label_63.setText("Create new Interview")
-        font5 = QFont()
-        font5.setFamily(u"Segoe UI")
-        font5.setPointSize(30)
-
-        self.label_63.setFont(font5)
-        self.label_63.setStyleSheet(u"")
-        self.label_63.setAlignment(Qt.AlignLeft)
-        self.verticalLayout_103.addWidget(self.label_63)
-        self.stackedWidget.addWidget(self.page_createInterview)
 
         #Dashboard
         self.page_dashboard = QWidget()
@@ -1462,8 +1446,10 @@ class Ui_MainWindow(object):
         print(self.sheetname)
 
     def createNewInterview(self):
-        self.stackedWidget.setCurrentWidget(self.page_createInterview)
-        self.label_top_info_2.setText(QCoreApplication.translate("MainWindow", u"| Create New Interview", None))
+         self.window = QtWidgets.QMainWindow()
+         self.ui = addInterviewForm.Ui_AddNewInterview()
+         self.ui.setupUi(self.window)
+         self.window.show()
     def drilldownclick(self, clientname):
         print(clientname)
     def retranslateUi(self, MainWindow):
