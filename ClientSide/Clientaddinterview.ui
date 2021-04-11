@@ -53,7 +53,7 @@
   <widget class="QPushButton" name="addInterviewButton">
    <property name="geometry">
     <rect>
-     <x>290</x>
+     <x>280</x>
      <y>140</y>
      <width>144</width>
      <height>28</height>
