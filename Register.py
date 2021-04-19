@@ -226,7 +226,7 @@ class Ui_RegisterWindow(object):
 
     def close(self):
         app.quit()
-    def Login(self):
+    def Login(self, checked):
         self.window = QtWidgets.QMainWindow()
         self.ui = Login.Ui_LoginWindow()
         self.ui.setupUi(self.window)

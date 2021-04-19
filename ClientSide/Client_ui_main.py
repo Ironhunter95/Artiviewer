@@ -11,6 +11,7 @@ from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
 from PySide2.QtWidgets import *
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread
+import cv2
 
 import files_rc
 from ClientSide import addInterviewForm
@@ -793,11 +794,38 @@ class Ui_MainWindow(object):
                                            "border-image:url(C:/Users/Mohammed Saber/Desktop/Cardiff/Developement Project/createinterviewpressed.png);}")
         self.createInterview.clicked.connect(self.createNewInterview)
 
-        #Dashboard
-        self.page_dashboard = QWidget()
-        self.page_dashboard.setObjectName(u"page_dashboard")
+        #Disclaimer Page
+        self.page_disclaimer = QWidget()
+        self.page_disclaimer.setObjectName(u"page_disclaimer")
+        self.verticalLayoutDis = QVBoxLayout(self.page_disclaimer)
+        self.verticalLayoutDis.setObjectName(u"verticalLayoutDis")
+        self.labelDis = QLabel(self.page_disclaimer)
+        self.labelDis.setObjectName(u"labelDis")
+        fontdsi2 = QFont()
+        fontdsi2.setFamily(u"Segoe UI")
+        fontdsi2.setPointSize(15)
+        self.labelDis.setFont(font5)
+        self.labelDis.setStyleSheet(u"")
+        self.labelDis.setAlignment(Qt.AlignLeft)
+        self.labelDis.setText("Disclaimer")
+        self.labelDis3 = QLabel(self.page_disclaimer)
+        fontdsi2.setPointSize(12)
+        self.labelDis3.setFont(fontdsi2)
+        self.labelDis3.setTextFormat(Qt.RichText)
+        self.labelDis3.setText("<b>Disclaimer</b><br>Before starting the interview, please make sure you understand the following:<br>1- You will be presented with 5 questions.<br>2-Your answers will be recorded.<br>3- You will have up to 30 seconds to prepare an answer before the software starts recording. <br>Alternatively, you can start recording by clicking on the 'Start Recording' button<br>4- The software will also analyze your speech as well as body language to gauge your profeciency in some skills related to the job.<br>5- You will be allowed up to 3 minutes to answer each question.<br> However, you can endd the recording early by clicking on the 'Stop Recording' button<br>6-  After the successful completion of the interview, your recordings and scores will be sent to the hiring manager to be reviewed.")
+        self.labelDis.setMaximumSize((QSize(16777215, 70)))
+        self.labelDis3.setMaximumSize((QSize(16777215, 300)))
+        self.labelDis.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.labelDis3.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.verticalLayoutDis.addWidget(self.labelDis)
+        self.verticalLayoutDis.addWidget(self.labelDis3)
+        self.stackedWidget.addWidget(self.page_disclaimer)
 
-        self.verticalLayout_101 = QVBoxLayout(self.page_dashboard)
+        #Interview
+        self.interview = QWidget()
+        self.interview.setObjectName(u"page_dashboard")
+
+        self.verticalLayout_101 = QVBoxLayout(self.interview)
         self.verticalLayout_101.setObjectName(u"verticalLayout_10")
         self.label_61 = QLabel(self.page_home)
         self.label_61.setObjectName(u"label_6")
@@ -810,9 +838,9 @@ class Ui_MainWindow(object):
         self.label_61.setAlignment(Qt.AlignLeft)
         self.verticalLayout_101.addWidget(self.label_61)
 
-        self.stackedWidget.addWidget(self.page_dashboard)
+        self.stackedWidget.addWidget(self.interview)
         # Frame
-        self.frame_111 = QFrame(self.page_dashboard)
+        self.frame_111 = QFrame(self.interview)
         self.frame_111.setObjectName(u"frame_3")
         self.frame_111.setMinimumSize(QSize(900, 900))
         self.frame_111.setStyleSheet(u"background-color: rgb(39, 44, 54);\n"
@@ -1440,10 +1468,9 @@ class Ui_MainWindow(object):
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
     def interview_click(self,interviewname):
-        self.stackedWidget.setCurrentWidget(self.page_dashboard)
-        self.label_top_info_2.setText(QCoreApplication.translate("MainWindow", u"| Dashboard", None))
-        self.sheetname =interviewname
-        print(self.sheetname)
+        self.stackedWidget.setCurrentWidget(self.page_disclaimer)
+        self.label_top_info_2.setText(QCoreApplication.translate("MainWindow", u"Disclaimer Page", None))
+        self.labelDis.setText(interviewname[2:])
 
     def createNewInterview(self):
          self.window = QtWidgets.QMainWindow()

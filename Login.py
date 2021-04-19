@@ -191,7 +191,7 @@ class Ui_LoginWindow(object):
         self.forgotPasswordButton.setText(_translate("LoginWindow", "Forgot password?"))
     def close(self):
         app.quit()
-    def Register(self):
+    def Register(self, checked):
         self.window = QtWidgets.QMainWindow()
         self.ui = Register.Ui_RegisterWindow()
         self.ui.setupUi(self.window)
