@@ -817,8 +817,57 @@ class Ui_MainWindow(object):
         self.labelDis3.setMaximumSize((QSize(16777215, 300)))
         self.labelDis.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
         self.labelDis3.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.consent = QRadioButton(self.page_disclaimer)
+        self.consent.setObjectName(u"consent")
+        self.consent.setFont(fontdsi2)
+        self.consent.setText("I have read, understood, and agree to the disclaimer")
+        self.consent.clicked.connect(self.enableStartInterviewButton)
+
+        self.consent.setStyleSheet(u"QRadioButton::indicator {\n"
+                                       "    width:                  12px;\n"
+                                       "    height:                 12px;\n"
+                                       "    border-radius:          7px;\n"
+                                       "}\n"
+                                       "\n"
+                                       "QRadioButton::indicator:checked {\n"
+                                       "    background-color:       orange;\n"
+                                       "    border:                 2px solid black;\n"
+                                       "}\n"
+                                       "\n"
+                                       "QRadioButton::indicator:unchecked {\n"
+                                       "    background-color:       white;\n"
+                                       "    border:                 2px solid black;\n"
+                                       "}")
+        self.startInterview = QPushButton(self.page_disclaimer)
+        self.startInterview.setObjectName(u"startInterview")
+        self.startInterview.setMinimumSize(QSize(200, 0))
+        self.startInterview.setMaximumSize(QSize(200, 16777215))
+        self.startInterview.setText("Start Interview")
+        self.startInterview.setEnabled(False)
+        self.startInterview.setStyleSheet(u"QPushButton{background-color:rgb(44,49,60);\n"
+                                       "color:white;\n"
+                                       "border-style:outset;\n"
+                                       "border-width:2px;\n"
+                                       "border-radius:10px;\n"
+                                       "border-color:rgb(233,151,0);\n"
+                                       "font:16px bold;}\n"
+                                       "QPushButton:Hover{background-color:rgb(64,71,88);\n"
+                                       "border-style:outset;\n"
+                                       "border-width:2px;\n"
+                                       "border-radius:10px;\n"
+                                       "border-color:rgb(233,151,0);\n"
+                                       "font:16px bold;}\n"
+                                       "QPushButton:Pressed{background-color:green;\n"
+                                       "border-style:outset;\n"
+                                       "border-width:2px;\n"
+                                       "border-radius:10px;\n"
+                                       "border-color:white;\n"
+                                       "font:16px bold;}")
+
         self.verticalLayoutDis.addWidget(self.labelDis)
         self.verticalLayoutDis.addWidget(self.labelDis3)
+        self.verticalLayoutDis.addWidget(self.consent)
+        self.verticalLayoutDis.addWidget(self.startInterview, 0, Qt.AlignHCenter)
         self.stackedWidget.addWidget(self.page_disclaimer)
 
         #Interview
@@ -1479,6 +1528,9 @@ class Ui_MainWindow(object):
          self.window.show()
     def drilldownclick(self, clientname):
         print(clientname)
+    def enableStartInterviewButton(self,checked):
+        self.startInterview.setEnabled(True)
+        self.consent.setEnabled(False)
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.btn_toggle_menu.setText("")
