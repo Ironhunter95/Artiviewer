@@ -1,8 +1,10 @@
 import sys
+from datetime import datetime
 from functools import partial
 from random import random
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QImage
 from PySide2.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
     QRect, QSize, QUrl, Qt)
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
@@ -899,6 +901,36 @@ class Ui_MainWindow(object):
         self.frameQ.setFrameShadow(QFrame.Raised)
         self.vLayoutQ.addWidget(self.frameQ)
         # End Frame
+        self.startQuestionButton = QPushButton(self.Question)
+        self.startQuestionButton.setObjectName(u"startQuestionButton")
+        self.startQuestionButton.setMinimumSize(QSize(200, 0))
+        self.startQuestionButton.setMaximumSize(QSize(200, 16777215))
+        self.startQuestionButton.setText("Start Recording")
+        self.startQuestionButton.setStyleSheet(u"QPushButton{background-color:rgb(44,49,60);\n"
+                                                "color:white;\n"
+                                                "border-style:outset;\n"
+                                                "border-width:2px;\n"
+                                                "border-radius:10px;\n"
+                                                "border-color:rgb(233,151,0);\n"
+                                                "font:16px bold;}\n"
+                                                "QPushButton:Hover{background-color:rgb(64,71,88);\n"
+                                                "border-style:outset;\n"
+                                                "border-width:2px;\n"
+                                                "border-radius:10px;\n"
+                                                "border-color:rgb(233,151,0);\n"
+                                                "font:16px bold;}\n"
+                                                "QPushButton:Pressed{background-color:green;\n"
+                                                "border-style:outset;\n"
+                                                "border-width:2px;\n"
+                                                "border-radius:10px;\n"
+                                                "border-color:white;\n"
+                                                "font:16px bold;}")
+        self.startQuestionButton.clicked.connect(self.startRecording)
+        self.imageLabel = QLabel(self.frameQ)
+        self.imageLabel.setObjectName(u"imageLabel")
+        self.logic = 0
+
+        self.vLayoutQ.addWidget(self.startQuestionButton)
         self.stackedWidget.addWidget(self.Question)
 
         #Settings page
@@ -1484,6 +1516,39 @@ class Ui_MainWindow(object):
     def enableStartInterviewButton(self,checked):
         self.startInterviewButton.setEnabled(True)
         self.consent.setEnabled(False)
+    def startRecording(self):
+        self.logic=1
+        cap = cv2.VideoCapture(1)
+        out = cv2.VideoWriter('F:/Recordings/VideoTrial.mp4',-1,20.0,(640,480))
+        print('here')
+        while(cap.isOpened()):
+            ret, frame = cap.read()
+            if ret == True:
+                self.displayImage(frame,1)
+                cv2.waitKey()
+                if self.logic==1:
+                    out.write(frame)
+                    self.labelQ.setText("Recording Started")
+                if self.logic==0:
+                    self.labelQ.setText("Recording Stopped")
+                    break
+            else:
+                print("Return not found")
+        cap.release()
+    def stopRecording(self):
+        self.logic=0
+
+    def displayImage(self,img,window=1):
+        qformat = QImage.Format_Indexed8
+        if len(img.shape)==3:
+            if (img.shape [2]) ==4:
+                qformat=QImage.Format_RGBA8888
+            else:
+                qformat = QImage.Format_RGB8888
+        img = QImage(img,img.shape[1],img.shape[0],qformat)
+        img = img.rgbSwapped()
+        self.imageLabel.setPixmap(QPixmap.fromImage(img))
+
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.btn_toggle_menu.setText("")
