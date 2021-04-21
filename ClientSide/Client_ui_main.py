@@ -838,13 +838,13 @@ class Ui_MainWindow(object):
                                        "    background-color:       white;\n"
                                        "    border:                 2px solid black;\n"
                                        "}")
-        self.startInterview = QPushButton(self.page_disclaimer)
-        self.startInterview.setObjectName(u"startInterview")
-        self.startInterview.setMinimumSize(QSize(200, 0))
-        self.startInterview.setMaximumSize(QSize(200, 16777215))
-        self.startInterview.setText("Start Interview")
-        self.startInterview.setEnabled(False)
-        self.startInterview.setStyleSheet(u"QPushButton{background-color:rgb(44,49,60);\n"
+        self.startInterviewButton = QPushButton(self.page_disclaimer)
+        self.startInterviewButton.setObjectName(u"startInterviewButton")
+        self.startInterviewButton.setMinimumSize(QSize(200, 0))
+        self.startInterviewButton.setMaximumSize(QSize(200, 16777215))
+        self.startInterviewButton.setText("Start Interview")
+        self.startInterviewButton.setEnabled(False)
+        self.startInterviewButton.setStyleSheet(u"QPushButton{background-color:rgb(44,49,60);\n"
                                        "color:white;\n"
                                        "border-style:outset;\n"
                                        "border-width:2px;\n"
@@ -863,91 +863,43 @@ class Ui_MainWindow(object):
                                        "border-radius:10px;\n"
                                        "border-color:white;\n"
                                        "font:16px bold;}")
-
+        self.startInterviewButton.clicked.connect(self.startInterview)
         self.verticalLayoutDis.addWidget(self.labelDis)
         self.verticalLayoutDis.addWidget(self.labelDis3)
         self.verticalLayoutDis.addWidget(self.consent)
-        self.verticalLayoutDis.addWidget(self.startInterview, 0, Qt.AlignHCenter)
+        self.verticalLayoutDis.addWidget(self.startInterviewButton, 0, Qt.AlignHCenter)
         self.stackedWidget.addWidget(self.page_disclaimer)
 
-        #Interview
-        self.interview = QWidget()
-        self.interview.setObjectName(u"page_dashboard")
+        #Question 1
+        self.Question = QWidget()
+        self.Question.setObjectName(u"Question")
 
-        self.verticalLayout_101 = QVBoxLayout(self.interview)
-        self.verticalLayout_101.setObjectName(u"verticalLayout_10")
-        self.label_61 = QLabel(self.page_home)
-        self.label_61.setObjectName(u"label_6")
-        font51 = QFont()
-        font51.setFamily(u"Segoe UI")
-        font51.setPointSize(20)
+        self.vLayoutQ = QVBoxLayout(self.Question)
+        self.vLayoutQ.setObjectName(u"vLayoutQ")
+        self.labelQ = QLabel(self.Question)
+        self.labelQ.setObjectName(u"labelQ")
+        fontQ = QFont()
+        fontQ.setFamily(u"Segoe UI")
+        fontQ.setPointSize(20)
 
-        self.label_61.setFont(font51)
-        self.label_61.setStyleSheet(u"")
-        self.label_61.setAlignment(Qt.AlignLeft)
-        self.verticalLayout_101.addWidget(self.label_61)
+        self.labelQ.setFont(fontQ)
+        self.labelQ.setStyleSheet(u"")
+        self.labelQ.setAlignment(Qt.AlignLeft)
+        self.labelQ.setText("Tell us about yourself")
+        self.vLayoutQ.addWidget(self.labelQ)
 
-        self.stackedWidget.addWidget(self.interview)
+        self.stackedWidget.addWidget(self.Question)
         # Frame
-        self.frame_111 = QFrame(self.interview)
-        self.frame_111.setObjectName(u"frame_3")
-        self.frame_111.setMinimumSize(QSize(900, 900))
-        self.frame_111.setStyleSheet(u"background-color: rgb(39, 44, 54);\n"
+        self.frameQ = QFrame(self.Question)
+        self.frameQ.setObjectName(u"frameQ")
+        self.frameQ.setMinimumSize(QSize(900, 900))
+        self.frameQ.setStyleSheet(u"background-color: rgb(39, 44, 54);\n"
                                     "border-radius: 5px;")
-        self.frame_111.setFrameShape(QFrame.StyledPanel)
-        self.frame_111.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_101.addWidget(self.frame_111)
+        self.frameQ.setFrameShape(QFrame.StyledPanel)
+        self.frameQ.setFrameShadow(QFrame.Raised)
+        self.vLayoutQ.addWidget(self.frameQ)
         # End Frame
-        x, y = 20, 20
-
-        drilldown = client.open(self.sheetname).sheet1
-        firstnames = drilldown.col_values(2)
-        lastnames = drilldown.col_values(3)
-        firstnames = firstnames[1:]
-        lastnames = lastnames[1:]
-        clients = []
-        clinetnum = 0
-        for fn in firstnames:
-            self.drilldownbutton = QPushButton(self.frame_111)
-            self.drilldownbutton.setObjectName('Client%d' % clinetnum)
-            self.drilldownbutton.setGeometry(QRect(x, y, 180, 121))
-            score = drilldown.row_values(clinetnum+2)
-            score  = score[3:]
-            score = [int(i) for i in score]
-            score = sum(score)/4
-            self.drilldownbutton.setText(fn+'\n'+lastnames[clinetnum]+'\n'+str(score))
-            if score<=3:
-                self.drilldownbutton.setStyleSheet(u"QPushButton {font: 75 14pt \"MS Shell Dlg 2\";\n"
-                                               " text-align: center;\n"
-                                               "padding: 20px;\n"
-                                               "border-color: rgb(233, 151, 0);\n"
-                                               "border :3px solid red;}\n"
-                                               "QPushButton:Pressed{\n"
-                                               "border :3px solid orange;\n"
-                                               "}")
-            elif score <= 7:
-                self.drilldownbutton.setStyleSheet(u"QPushButton {font: 75 14pt \"MS Shell Dlg 2\";\n"
-                                                   " text-align: center;\n"
-                                                   "padding: 20px;\n"
-                                                   "border-color: rgb(233, 151, 0);\n"
-                                                   "border :3px solid yellow;}\n"
-                                                   "QPushButton:Pressed{\n"
-                                                   "border :3px solid orange;\n"
-                                                   "}")
-            elif score > 7 :
-                self.drilldownbutton.setStyleSheet(u"QPushButton {font: 75 14pt \"MS Shell Dlg 2\";\n"
-                                                   " text-align: center;\n"
-                                                   "padding: 20px;\n"
-                                                   "border-color: rgb(233, 151, 0);\n"
-                                                   "border :3px solid green;}\n"
-                                                   "QPushButton:Pressed{\n"
-                                                   "border :3px solid orange;\n"
-                                                   "}")
-            self.drilldownbutton.clicked.connect(partial(self.drilldownclick, self.drilldownbutton.objectName()))
-            clients.append(self.drilldownbutton)
-            x += 200
-            clinetnum += 1
-
+        self.stackedWidget.addWidget(self.Question)
 
         #Settings page
         self.page_widgets = QWidget()
@@ -1520,7 +1472,8 @@ class Ui_MainWindow(object):
         self.stackedWidget.setCurrentWidget(self.page_disclaimer)
         self.label_top_info_2.setText(QCoreApplication.translate("MainWindow", u"Disclaimer Page", None))
         self.labelDis.setText(interviewname[2:])
-
+    def startInterview(self):
+        self.stackedWidget.setCurrentWidget(self.Question)
     def createNewInterview(self):
          self.window = QtWidgets.QMainWindow()
          self.ui = addInterviewForm.Ui_AddNewInterview()
@@ -1529,7 +1482,7 @@ class Ui_MainWindow(object):
     def drilldownclick(self, clientname):
         print(clientname)
     def enableStartInterviewButton(self,checked):
-        self.startInterview.setEnabled(True)
+        self.startInterviewButton.setEnabled(True)
         self.consent.setEnabled(False)
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
@@ -1553,7 +1506,6 @@ class Ui_MainWindow(object):
         self.label_top_info_2.setText(QCoreApplication.translate("MainWindow", u"| Home", None))
         self.label_user_icon.setText(QCoreApplication.translate("MainWindow", u"WM", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"Active Interviews", None))
-        self.label_61.setText(QCoreApplication.translate("MainWindow", u"Completed Interviews", None))
         self.labelBoxBlenderInstalation.setText(QCoreApplication.translate("MainWindow", u"BLENDER INSTALLATION", None))
         self.lineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Your Password", None))
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Open Blender", None))

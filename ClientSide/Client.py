@@ -53,7 +53,7 @@ class MainWindow(QMainWindow):
         ## ==> ADD CUSTOM MENUS
         self.ui.stackedWidget.setMinimumWidth(20)
         UIFunctions.addNewMenu(self, "Home", "btn_home", "url(:/16x16/icons/16x16/cil-home.png)", True)
-        UIFunctions.addNewMenu(self, "Add Interview", "btn_new_user", "url(:/16x16/icons/16x16/cil-user-follow.png)", True)
+        UIFunctions.addNewMenu(self, "Account", "btn_new_user", "url(:/16x16/icons/16x16/cil-user-follow.png)", True)
         UIFunctions.addNewMenu(self, "Custom Widgets", "btn_widgets", "url(:/16x16/icons/16x16/cil-equalizer.png)", False)
         ## ==> END ##
 
