@@ -1,9 +1,11 @@
 import sys
+import time
 from datetime import datetime
 from functools import partial
 from random import random
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtGui import QImage
 from PySide2.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
     QRect, QSize, QUrl, Qt)
@@ -17,6 +19,25 @@ import cv2
 
 import files_rc
 from ClientSide import addInterviewForm
+from ClientSide.VideoInterview import VideoInterview
+
+
+class Worker1(QThread):
+    ImageUpdate = pyqtSignal(QImage)
+    def run(self):
+        self.ThreadActive = True
+        Capture = cv2.VideoCapture(0)
+        while self.ThreadActive:
+            ret, frame = Capture.read()
+            if ret:
+                Image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                FlippedImage = cv2.flip(Image, 1)
+                ConvertToQtFormat = QImage(FlippedImage.data, FlippedImage.shape[1], FlippedImage.shape[0], QImage.Format_RGB888)
+                Pic = ConvertToQtFormat.scaled(640, 480, Qt.KeepAspectRatio)
+                self.ImageUpdate.emit(Pic)
+    def stop(self):
+        self.ThreadActive = False
+        self.quit()
 
 
 class Ui_MainWindow(object):
@@ -1505,7 +1526,15 @@ class Ui_MainWindow(object):
         self.label_top_info_2.setText(QCoreApplication.translate("MainWindow", u"Disclaimer Page", None))
         self.labelDis.setText(interviewname[2:])
     def startInterview(self):
-        self.stackedWidget.setCurrentWidget(self.Question)
+        #self.stackedWidget.setCurrentWidget(self.Question)
+        self.w = None
+        if self.w is None:
+            self.w = VideoInterview()
+            self.w.show()
+            #self.startInterviewButton.setEnabled(False)
+        else:
+            self.w.close()  # Close window.
+            self.w = None  # Discard reference.
     def createNewInterview(self):
          self.window = QtWidgets.QMainWindow()
          self.ui = addInterviewForm.Ui_AddNewInterview()
@@ -1517,26 +1546,13 @@ class Ui_MainWindow(object):
         self.startInterviewButton.setEnabled(True)
         self.consent.setEnabled(False)
     def startRecording(self):
-        self.logic=1
-        cap = cv2.VideoCapture(1)
-        out = cv2.VideoWriter('F:/Recordings/VideoTrial.mp4',-1,20.0,(640,480))
-        print('here')
-        while(cap.isOpened()):
-            ret, frame = cap.read()
-            if ret == True:
-                self.displayImage(frame,1)
-                cv2.waitKey()
-                if self.logic==1:
-                    out.write(frame)
-                    self.labelQ.setText("Recording Started")
-                if self.logic==0:
-                    self.labelQ.setText("Recording Stopped")
-                    break
-            else:
-                print("Return not found")
-        cap.release()
+      self.Worker1 = Worker1()
+      self.Worker1.start()
+      self.Worker1.ImageUpdate.connect(self.ImageUpdateSlot)
+    def ImageUpdateSlot(self, Image):
+        self.imageLabel.setPixmap(QPixmap.fromImage(Image))
     def stopRecording(self):
-        self.logic=0
+        pass
 
     def displayImage(self,img,window=1):
         qformat = QImage.Format_Indexed8
