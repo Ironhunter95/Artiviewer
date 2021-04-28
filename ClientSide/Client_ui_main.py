@@ -835,9 +835,21 @@ class Ui_MainWindow(object):
         fontdsi2.setPointSize(12)
         self.labelDis3.setFont(fontdsi2)
         self.labelDis3.setTextFormat(Qt.RichText)
-        self.labelDis3.setText("<b>Disclaimer</b><br>Before starting the interview, please make sure you understand the following:<br>1- You will be presented with 5 questions.<br>2-Your answers will be recorded.<br>3- You will have up to 30 seconds to prepare an answer before the software starts recording. <br>Alternatively, you can start recording by clicking on the 'Start Recording' button<br>4- The software will also analyze your speech as well as body language to gauge your profeciency in some skills related to the job.<br>5- You will be allowed up to 3 minutes to answer each question.<br> However, you can endd the recording early by clicking on the 'Stop Recording' button<br>6-  After the successful completion of the interview, your recordings and scores will be sent to the hiring manager to be reviewed.")
+        self.labelDis3.setText("<b>Disclaimer</b><br>Before starting the interview, "
+                               "please make sure you understand the following:<br>"
+                               "1- You will be presented with 5 questions.<br>"
+                               "2-Your answers will be recorded.<br>"
+                               "3- You will have up to 30 seconds to prepare an answer before the software starts recording. <br>"
+                               "Alternatively, you can start recording by clicking on the 'Start Recording' button<br>"
+                               "4- The software will also analyze your speech as well as body language to gauge your profeciency in some skills related to the job.<br>"
+                               "5- You will be allowed up to 3 minutes to answer each question.<br> "
+                               "However, you can endd the recording early by clicking on the 'Stop Recording' button<br>"
+                               "6- After the successful completion of the interview, your recordings and scores will be sent to the hiring manager to be reviewed.<br>"
+                               "7- An interview window will now open, please do not close the window or else your progress will not be saved<br>"
+                               "Please make sure you have enough time to complete the interview (30 Minutes) before starting<br>"
+                               "You will not be able to restart the interview")
         self.labelDis.setMaximumSize((QSize(16777215, 70)))
-        self.labelDis3.setMaximumSize((QSize(16777215, 300)))
+        self.labelDis3.setMaximumSize((QSize(16777215, 370)))
         self.labelDis.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
         self.labelDis3.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
         self.consent = QRadioButton(self.page_disclaimer)
