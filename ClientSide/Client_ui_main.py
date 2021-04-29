@@ -22,24 +22,6 @@ from ClientSide import addInterviewForm
 from ClientSide.VideoInterview import VideoInterview
 
 
-class Worker1(QThread):
-    ImageUpdate = pyqtSignal(QImage)
-    def run(self):
-        self.ThreadActive = True
-        Capture = cv2.VideoCapture(0)
-        while self.ThreadActive:
-            ret, frame = Capture.read()
-            if ret:
-                Image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                FlippedImage = cv2.flip(Image, 1)
-                ConvertToQtFormat = QImage(FlippedImage.data, FlippedImage.shape[1], FlippedImage.shape[0], QImage.Format_RGB888)
-                Pic = ConvertToQtFormat.scaled(640, 480, Qt.KeepAspectRatio)
-                self.ImageUpdate.emit(Pic)
-    def stop(self):
-        self.ThreadActive = False
-        self.quit()
-
-
 class Ui_MainWindow(object):
     sheetname = "0-Graduate Software Developer"
     def setupUi(self, MainWindow):
@@ -808,13 +790,12 @@ class Ui_MainWindow(object):
 
         #Add new interview Button
         self.createInterview = QPushButton(self.frame_11)
-        self.addInterviewWindow = None
         self.createInterview.setObjectName(u"createInterview")
         self.createInterview.setGeometry(QRect(x, y, 180, 121))  #X,Y,W,H
         self.createInterview.setStyleSheet(u"QPushButton{\n"
-                                           "border-image:url(C:/Users/Mohammed Saber/Desktop/Cardiff/Developement Project/createinterview.png);}\n"
+                                           "border-image:url(C:/Users/moham/OneDrive/Desktop/Cardiff/Developement Project/createinterview.png);}\n"
                                            "QPushButton:Pressed{\n"
-                                           "border-image:url(C:/Users/Mohammed Saber/Desktop/Cardiff/Developement Project/createinterviewpressed.png);}")
+                                           "border-image:url(C:/Users/moham/OneDrive/Desktop/Cardiff/Developement Project/createinterviewpressed.png);}")
         self.createInterview.clicked.connect(self.createNewInterview)
 
         #Disclaimer Page

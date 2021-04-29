@@ -1,12 +1,147 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QWidget
-
 import sys
+import time
 
-from random import randint
-class VideoInterview(QWidget):
+import cv2
+from PyQt5 import QtGui, QtCore
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.uic import loadUi
+
+class VideoInterview(QMainWindow):
     def __init__(self):
-        super().__init__()
-        layout = QVBoxLayout()
-        self.label = QLabel("Another Window % d" % randint(0,100))
-        layout.addWidget(self.label)
-        self.setLayout(layout)
+        super(VideoInterview,self).__init__()
+        GLOBAL_STATE = 0
+        GLOBAL_TITLE_BAR = True
+        loadUi('VideoRecordingUI.ui',self)
+        self.frame_icon_top_bar.setStyleSheet(u"background: transparent;\n"
+                                              "background-image: url(C:/Users/moham/PycharmProjects/Artiviewer/ClientSide/icons/16x16/cil-terminal.png);\n"
+                                              "background-position: center;\n"
+                                              "background-repeat: no-repeat;\n"
+                                              "")
+        self.btn_minimize.setStyleSheet(u"QPushButton {	\n"
+                                        "	border: none;\n"
+                                        "	background-color: transparent;\n"
+                                        "}\n"
+                                        "QPushButton:hover {\n"
+                                        "	background-color: rgb(52, 59, 72);\n"
+                                        "}\n"
+                                        "QPushButton:pressed {	\n"
+                                        "	background-color: rgb(85, 170, 255);\n"
+                                        "}")
+        icon = QIcon()
+        icon.addFile(u"C:/Users/moham/PycharmProjects/Artiviewer/ClientSide/icons/16x16/cil-window-minimize.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_minimize.setIcon(icon)
+        self.btn_maximize_restore.setStyleSheet(u"QPushButton {	\n"
+                                                "	border: none;\n"
+                                                "	background-color: transparent;\n"
+                                                "}\n"
+                                                "QPushButton:hover {\n"
+                                                "	background-color: rgb(52, 59, 72);\n"
+                                                "}\n"
+                                                "QPushButton:pressed {	\n"
+                                                "	background-color: rgb(85, 170, 255);\n"
+                                                "}")
+        icon1 = QIcon()
+        icon1.addFile(u"C:/Users/moham/PycharmProjects/Artiviewer/ClientSide/icons/16x16/cil-window-maximize.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_maximize_restore.setIcon(icon1)
+        self.btn_close.setStyleSheet(u"QPushButton {	\n"
+                                     "	border: none;\n"
+                                     "	background-color: transparent;\n"
+                                     "}\n"
+                                     "QPushButton:hover {\n"
+                                     "	background-color: rgb(52, 59, 72);\n"
+                                     "}\n"
+                                     "QPushButton:pressed {	\n"
+                                     "	background-color: rgb(85, 170, 255);\n"
+                                     "}")
+        icon2 = QIcon()
+        icon2.addFile(u"C:/Users/moham/PycharmProjects/Artiviewer/ClientSide/icons/16x16/cil-x.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_close.setIcon(icon2)
+        if GLOBAL_TITLE_BAR:
+            self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+            self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        else:
+            self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+            self.frame_label_top_btns.setContentsMargins(8, 0, 0, 5)
+            self.frame_label_top_btns.setMinimumHeight(42)
+            self.frame_icon_top_bar.hide()
+            self.frame_btns_right.hide()
+            self.frame_size_grip.hide()
+
+        self.shadow = QGraphicsDropShadowEffect(self)
+        self.shadow.setBlurRadius(17)
+        self.shadow.setXOffset(0)
+        self.shadow.setYOffset(0)
+        self.shadow.setColor(QColor(0, 0, 0, 150))
+        self.frame_main.setGraphicsEffect(self.shadow)
+
+        self.sizegrip = QSizeGrip(self.frame_size_grip)
+        self.sizegrip.setStyleSheet("width: 20px; height: 20px; margin 0px; padding: 0px;")
+
+        self.btn_minimize.clicked.connect(lambda: self.showMinimized())
+
+        self.btn_close.clicked.connect(lambda: self.close())
+        self.cancelInterviewButton.clicked.connect(self.cancelInterview)
+        # create a timer
+        self.timer = QTimer()
+        # set timer timeout callback function
+        self.timer.timeout.connect(self.viewCam)
+        # set control_bt callback clicked  function
+        self.startRecordingButton.clicked.connect(self.controlTimer)
+    def cancelInterview(self):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+
+        msg.setText("Are you sure you want to cancel the interview?")
+        msg.setInformativeText("Cancelling the interview will discard all your progress")
+        msg.setWindowTitle("Confirmation")
+        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg.buttonClicked.connect(self.msgbtn)
+        retval = msg.exec_()
+
+    def msgbtn(self,i):
+        if i.text()[1]=='Y':
+            self.close()
+    # view camera
+    def viewCam(self):
+        # read image in BGR format
+        ret, image = self.cap.read()
+        # convert image to RGB format
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        # get image infos
+        height, width, channel = image.shape
+        step = channel * width
+        # create QImage from image
+        qImg = QImage(image.data, width, height, step, QImage.Format_RGB888)
+        # show image in img_label
+        self.videoFeed.setPixmap(QPixmap.fromImage(qImg))
+
+    # start/stop timer
+    def controlTimer(self):
+        # if timer is stopped
+        if not self.timer.isActive():
+            # create video capture
+            self.cap = cv2.VideoCapture(0)
+            # start timer
+            self.timer.start(20)
+            self.startRecordingButton.setText("Stop Recording")
+        # if timer is started
+        else:
+            # stop timer
+            self.timer.stop()
+            # release video capture
+            self.cap.release()
+            self.startRecordingButton.setEnabled(False)
+            self.startRecordingButton.setText("Please move on to the next question")
+            self.startRecordingButton.setStyleSheet(u"QPushButton{background-color:rgb(44,49,60);\n"
+                                                    "                                                color:white;\n"
+                                                    "                                                border-style:outset;\n"
+                                                    "                                                border-width:2px;\n"
+                                                    "                                                border-radius:10px;\n"
+                                                    "                                                border-color:grey;\n"
+                                                    "                                                font:16px bold;}")
+app = QApplication(sys.argv)
+w = VideoInterview()
+w.show()
+app.exec_()
