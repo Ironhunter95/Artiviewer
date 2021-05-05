@@ -1,7 +1,10 @@
 import sys
+import threading
 import time
+import wave
 
 import cv2
+import pyaudio
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -101,7 +104,7 @@ class VideoInterview(QMainWindow):
         retval = msg.exec_()
 
     def msgbtn(self,i):
-        if i.text()[1]=='Y':
+        if i.text()[1] == 'Y':
             self.close()
     # view camera
     def viewCam(self):
@@ -109,7 +112,7 @@ class VideoInterview(QMainWindow):
         ret, image = self.cap.read()
         # convert image to RGB format
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        # get image infos
+        # get image info
         height, width, channel = image.shape
         step = channel * width
         # create QImage from image
@@ -123,15 +126,19 @@ class VideoInterview(QMainWindow):
         if not self.timer.isActive():
             # create video capture
             self.cap = cv2.VideoCapture(0)
+            start_AudioRecording()
             # start timer
             self.timer.start(20)
             self.startRecordingButton.setText("Stop Recording")
+            #fourcc = cv2.VideoWriter_fourcc(*'XVID')
+            #out = cv2.VideoWriter('output.avi', fourcc, 20.0, (640, 480))
         # if timer is started
         else:
             # stop timer
             self.timer.stop()
             # release video capture
             self.cap.release()
+            stop_AudioRecording()
             self.startRecordingButton.setEnabled(False)
             self.startRecordingButton.setText("Please move on to the next question")
             self.startRecordingButton.setStyleSheet(u"QPushButton{background-color:rgb(44,49,60);\n"
@@ -141,6 +148,72 @@ class VideoInterview(QMainWindow):
                                                     "                                                border-radius:10px;\n"
                                                     "                                                border-color:grey;\n"
                                                     "                                                font:16px bold;}")
+
+
+class AudioRecorder():
+
+    # Audio class based on pyAudio and Wave
+    def __init__(self):
+
+        self.open = True
+        self.rate = 44100
+        self.frames_per_buffer = 1024
+        self.channels = 2
+        self.format = pyaudio.paInt16
+        self.audio_filename = "temp_audio.wav"
+        self.audio = pyaudio.PyAudio()
+        self.stream = self.audio.open(format=self.format,
+                                      channels=self.channels,
+                                      rate=self.rate,
+                                      input=True,
+                                      frames_per_buffer=self.frames_per_buffer)
+        self.audio_frames = []
+
+    # Audio starts being recorded
+    def record(self):
+
+        self.stream.start_stream()
+        while (self.open == True):
+            data = self.stream.read(self.frames_per_buffer)
+            self.audio_frames.append(data)
+            if self.open == False:
+                break
+
+    # Finishes the audio recording therefore the thread too
+    def stop(self):
+
+        if self.open == True:
+            self.open = False
+            self.stream.stop_stream()
+            self.stream.close()
+            self.audio.terminate()
+
+            waveFile = wave.open(self.audio_filename, 'wb')
+            waveFile.setnchannels(self.channels)
+            waveFile.setsampwidth(self.audio.get_sample_size(self.format))
+            waveFile.setframerate(self.rate)
+            waveFile.writeframes(b''.join(self.audio_frames))
+            waveFile.close()
+
+        pass
+
+    # Launches the audio recording function using a thread
+    def start(self):
+        audio_thread = threading.Thread(target=self.record)
+        audio_thread.start()
+
+
+def start_AudioRecording():
+    global audio_thread
+
+    audio_thread = AudioRecorder()
+
+    audio_thread.start()
+def stop_AudioRecording():
+    audio_thread.stop()
+
+
+
 app = QApplication(sys.argv)
 w = VideoInterview()
 w.show()
