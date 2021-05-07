@@ -11,6 +11,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.uic import loadUi
 from AudioRecorder import AudioRecorder
+from keras.models import load_model
+from VideoRecorder import VideoRecorder
 
 class VideoInterview(QMainWindow):
     def __init__(self):
@@ -87,10 +89,16 @@ class VideoInterview(QMainWindow):
 
         self.btn_close.clicked.connect(lambda: self.close())
         self.cancelInterviewButton.clicked.connect(self.cancelInterview)
+        #Face recognizer
+        face_classifier = cv2.CascadeClassifier('./Emotion Recognition/frontFaceDetection.xml')
+        #Emotion recognition model
+        classifier = load_model('Emotion Recognition/emotionDetection.h5')
+        class_labels = ['Angry', 'Happy', 'Neutral', 'Sad', 'Surprise']
+
         # create a timer
         self.timer = QTimer()
         # set timer timeout callback function
-        self.timer.timeout.connect(self.viewCam)
+        self.timer.timeout.connect(self.dummy)
         # set control_bt callback clicked  function
         self.startRecordingButton.clicked.connect(self.controlTimer)
     def cancelInterview(self):
@@ -108,37 +116,23 @@ class VideoInterview(QMainWindow):
         if i.text()[1] == 'Y':
             self.close()
     # view camera
-    def viewCam(self):
-        # read image in BGR format
-        ret, image = self.cap.read()
-        # convert image to RGB format
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        # get image info
-        height, width, channel = image.shape
-        step = channel * width
-        # create QImage from image
-        qImg = QImage(image.data, width, height, step, QImage.Format_RGB888)
-        # show image in img_label
-        self.videoFeed.setPixmap(QPixmap.fromImage(qImg))
+    def dummy(self):
+        pass
 
     # start/stop timer
     def controlTimer(self):
         # if timer is stopped
         if not self.timer.isActive():
-            # create video capture
-            self.cap = cv2.VideoCapture(0)
+            start_VideoRecording()
             start_AudioRecording()
             # start timer
             self.timer.start(20)
             self.startRecordingButton.setText("Stop Recording")
-            #fourcc = cv2.VideoWriter_fourcc(*'XVID')
-            #out = cv2.VideoWriter('output.avi', fourcc, 20.0, (640, 480))
         # if timer is started
         else:
             # stop timer
             self.timer.stop()
-            # release video capture
-            self.cap.release()
+            stop_VideoRecording()
             stop_AudioRecording()
             self.startRecordingButton.setEnabled(False)
             self.startRecordingButton.setText("Please move on to the next question")
@@ -163,6 +157,14 @@ def stop_AudioRecording():
     audio_thread.stop()
 
 
+def start_VideoRecording():
+    global video_thread
+
+    video_thread = VideoRecorder()
+
+    video_thread.start()
+def stop_VideoRecording():
+    video_thread.stop()
 
 app = QApplication(sys.argv)
 w = VideoInterview()
