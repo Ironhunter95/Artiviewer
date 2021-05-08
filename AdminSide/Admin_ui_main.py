@@ -12,7 +12,6 @@ from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 
 import files_rc
-from trials2 import CollapsibleBox
 
 
 class Ui_MainWindow(object):
@@ -786,9 +785,9 @@ class Ui_MainWindow(object):
         self.createInterview.setObjectName(u"createInterview")
         self.createInterview.setGeometry(QRect(x, y, 180, 121))  #X,Y,W,H
         self.createInterview.setStyleSheet(u"QPushButton{\n"
-                                           "border-image:url(C:/Users/Mohammed Saber/Desktop/Cardiff/Developement Project/createinterview.png);}\n"
+                                           "border-image:url(C:/Users/moham/OneDrive/Desktop/Cardiff/Developement Project/createinterview.png);}\n"
                                            "QPushButton:Pressed{\n"
-                                           "border-image:url(C:/Users/Mohammed Saber/Desktop/Cardiff/Developement Project/createinterviewpressed.png);}")
+                                           "border-image:url(C:/Users/moham/OneDrive/Desktop/Cardiff/Developement Project/createinterviewpressed.png);}")
         self.createInterview.clicked.connect(self.createNewInterview)
 
         # Create Interview Page
