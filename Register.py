@@ -60,7 +60,7 @@ class Ui_RegisterWindow(object):
         self.usernameField.setSizePolicy(sizePolicy)
         self.usernameField.setObjectName("usernameField")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
-        self.label_3.setGeometry(QtCore.QRect(80, 150, 271, 41))
+        self.label_3.setGeometry(QtCore.QRect(80, 150, 300, 51))
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
