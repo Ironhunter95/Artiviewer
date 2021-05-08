@@ -94,7 +94,6 @@ class VideoInterview(QMainWindow):
         #Emotion recognition model
         classifier = load_model('Emotion Recognition/emotionDetection.h5')
         class_labels = ['Angry', 'Happy', 'Neutral', 'Sad', 'Surprise']
-
         # create a timer
         self.timer = QTimer()
         # set timer timeout callback function

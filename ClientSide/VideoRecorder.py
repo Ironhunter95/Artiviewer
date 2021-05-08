@@ -68,7 +68,6 @@ class VideoRecorder():
                         cv2.putText(video_frame, label, label_position, cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 3)
                     else:
                         cv2.putText(video_frame, 'No Face Found', (20, 60), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 3)
-                    print("\n\n")
                 cv2.imshow('Interview Webcam', video_frame)
                 cv2.waitKey(1)
             else:
