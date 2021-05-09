@@ -879,73 +879,13 @@ class Ui_MainWindow(object):
                                        "border-radius:10px;\n"
                                        "border-color:white;\n"
                                        "font:16px bold;}")
+
         self.startInterviewButton.clicked.connect(self.startInterview)
         self.verticalLayoutDis.addWidget(self.labelDis)
         self.verticalLayoutDis.addWidget(self.labelDis3)
         self.verticalLayoutDis.addWidget(self.consent)
         self.verticalLayoutDis.addWidget(self.startInterviewButton, 0, Qt.AlignHCenter)
         self.stackedWidget.addWidget(self.page_disclaimer)
-
-        #Question 1
-        self.Question = QWidget()
-        self.Question.setObjectName(u"Question")
-
-        self.vLayoutQ = QVBoxLayout(self.Question)
-        self.vLayoutQ.setObjectName(u"vLayoutQ")
-        self.labelQ = QLabel(self.Question)
-        self.labelQ.setObjectName(u"labelQ")
-        fontQ = QFont()
-        fontQ.setFamily(u"Segoe UI")
-        fontQ.setPointSize(20)
-
-        self.labelQ.setFont(fontQ)
-        self.labelQ.setStyleSheet(u"")
-        self.labelQ.setAlignment(Qt.AlignLeft)
-        self.labelQ.setText("Tell us about yourself")
-        self.vLayoutQ.addWidget(self.labelQ)
-
-        self.stackedWidget.addWidget(self.Question)
-        # Frame
-        self.frameQ = QFrame(self.Question)
-        self.frameQ.setObjectName(u"frameQ")
-        self.frameQ.setMinimumSize(QSize(900, 900))
-        self.frameQ.setStyleSheet(u"background-color: rgb(39, 44, 54);\n"
-                                    "border-radius: 5px;")
-        self.frameQ.setFrameShape(QFrame.StyledPanel)
-        self.frameQ.setFrameShadow(QFrame.Raised)
-        self.vLayoutQ.addWidget(self.frameQ)
-        # End Frame
-        self.startQuestionButton = QPushButton(self.Question)
-        self.startQuestionButton.setObjectName(u"startQuestionButton")
-        self.startQuestionButton.setMinimumSize(QSize(200, 0))
-        self.startQuestionButton.setMaximumSize(QSize(200, 16777215))
-        self.startQuestionButton.setText("Start Recording")
-        self.startQuestionButton.setStyleSheet(u"QPushButton{background-color:rgb(44,49,60);\n"
-                                                "color:white;\n"
-                                                "border-style:outset;\n"
-                                                "border-width:2px;\n"
-                                                "border-radius:10px;\n"
-                                                "border-color:rgb(233,151,0);\n"
-                                                "font:16px bold;}\n"
-                                                "QPushButton:Hover{background-color:rgb(64,71,88);\n"
-                                                "border-style:outset;\n"
-                                                "border-width:2px;\n"
-                                                "border-radius:10px;\n"
-                                                "border-color:rgb(233,151,0);\n"
-                                                "font:16px bold;}\n"
-                                                "QPushButton:Pressed{background-color:green;\n"
-                                                "border-style:outset;\n"
-                                                "border-width:2px;\n"
-                                                "border-radius:10px;\n"
-                                                "border-color:white;\n"
-                                                "font:16px bold;}")
-        self.startQuestionButton.clicked.connect(self.startRecording)
-        self.imageLabel = QLabel(self.frameQ)
-        self.imageLabel.setObjectName(u"imageLabel")
-        self.logic = 0
-
-        self.vLayoutQ.addWidget(self.startQuestionButton)
-        self.stackedWidget.addWidget(self.Question)
 
         #Settings page
         self.page_widgets = QWidget()
@@ -1538,26 +1478,6 @@ class Ui_MainWindow(object):
     def enableStartInterviewButton(self,checked):
         self.startInterviewButton.setEnabled(True)
         self.consent.setEnabled(False)
-    def startRecording(self):
-      self.Worker1 = Worker1()
-      self.Worker1.start()
-      self.Worker1.ImageUpdate.connect(self.ImageUpdateSlot)
-    def ImageUpdateSlot(self, Image):
-        self.imageLabel.setPixmap(QPixmap.fromImage(Image))
-    def stopRecording(self):
-        pass
-
-    def displayImage(self,img,window=1):
-        qformat = QImage.Format_Indexed8
-        if len(img.shape)==3:
-            if (img.shape [2]) ==4:
-                qformat=QImage.Format_RGBA8888
-            else:
-                qformat = QImage.Format_RGB8888
-        img = QImage(img,img.shape[1],img.shape[0],qformat)
-        img = img.rgbSwapped()
-        self.imageLabel.setPixmap(QPixmap.fromImage(img))
-
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.btn_toggle_menu.setText("")
