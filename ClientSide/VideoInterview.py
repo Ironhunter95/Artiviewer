@@ -13,10 +13,20 @@ from PyQt5.uic import loadUi
 from AudioRecorder import AudioRecorder
 from keras.models import load_model
 from VideoRecorder import VideoRecorder
+from oauth2client.service_account import ServiceAccountCredentials
+import gspread
 
 class VideoInterview(QMainWindow):
     def __init__(self):
         super(VideoInterview,self).__init__()
+        scope = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
+                 "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
+        creds = ServiceAccountCredentials.from_json_keyfile_name("GoogleCreds.json", scope)
+        client = gspread.authorize(creds)
+        Sheet = client.open("Active Interviews").sheet1
+        Questions = Sheet.row_values(2)
+        self.Questions=Questions[6:]
+        self.Question_Index = 0
         GLOBAL_STATE = 0
         GLOBAL_TITLE_BAR = True
         loadUi('VideoRecordingUI.ui',self)
@@ -89,17 +99,43 @@ class VideoInterview(QMainWindow):
 
         self.btn_close.clicked.connect(lambda: self.close())
         self.cancelInterviewButton.clicked.connect(self.cancelInterview)
-        #Face recognizer
-        face_classifier = cv2.CascadeClassifier('./Emotion Recognition/frontFaceDetection.xml')
-        #Emotion recognition model
-        classifier = load_model('Emotion Recognition/emotionDetection.h5')
-        class_labels = ['Angry', 'Happy', 'Neutral', 'Sad', 'Surprise']
+        self.questionTitle.setText(self.Questions[self.Question_Index])
         # create a timer
         self.timer = QTimer()
         # set timer timeout callback function
         self.timer.timeout.connect(self.dummy)
         # set control_bt callback clicked  function
         self.startRecordingButton.clicked.connect(self.controlTimer)
+        self.nextQuestionButton.clicked.connect(self.nextQuestion)
+    def nextQuestion(self):
+        if self.Question_Index == 4:
+            self.close()
+        self.startRecordingButton.setEnabled(True)
+        self.startRecordingButton.setStyleSheet(u"QPushButton{background-color:rgb(44,49,60);\n"
+                                                "                                                color:white;\n"
+                                                "                                                border-style:outset;\n"
+                                                "                                                border-width:2px;\n"
+                                                "                                                border-radius:10px;\n"
+                                                "                                                border-color:rgb(233,151,0);\n"
+                                                "                                                font:16px bold;}\n"
+                                                "QPushButton:Hover{background-color:rgb(64,71,88);\n"
+                                                "                                                border-style:outset;\n"
+                                                "                                                border-width:2px;\n"
+                                                "                                                border-radius:10px;\n"
+                                                "                                                border-color:rgb(233,151,0);\n"
+                                                "                                                font:16px bold;}\n"
+                                                "QPushButton:Pressed{background-color:orange;\\n\n"
+                                                "                                                border-style:outset;\n"
+                                                "   "
+                                                "                                             border-width:2px;\n"
+                                                "                                                border-radius:10px;\n"
+                                                "                                                border-color:white;\n"
+                                                "                                                font:16px bold;}")
+        self.startRecordingButton.setText("Start Recording")
+        self.Question_Index+=1
+        self.questionTitle.setText(self.Questions[self.Question_Index])
+        if self.Question_Index==4:
+            self.nextQuestionButton.setText("End Interview")
     def cancelInterview(self):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Critical)
