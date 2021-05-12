@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 
-class Ui_AddNewInterview(object):
+class addInterviewForm(object):
     def setupUi(self, AddNewInterview):
         AddNewInterview.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         AddNewInterview.setObjectName("AddNewInterview")
@@ -146,7 +146,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     AddNewInterview = QtWidgets.QWidget()
-    ui = Ui_AddNewInterview()
+    ui = addInterviewForm()
     ui.setupUi(AddNewInterview)
     AddNewInterview.show()
     sys.exit(app.exec_())

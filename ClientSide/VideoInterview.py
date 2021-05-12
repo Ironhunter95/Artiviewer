@@ -158,14 +158,12 @@ class VideoInterview(QMainWindow):
         msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         msg.buttonClicked.connect(self.msgbtn)
         retval = msg.exec_()
-
     def msgbtn(self,i):
         if i.text()[1] == 'Y':
             self.close()
     # view camera
     def dummy(self):
         pass
-
     # start/stop timer
     def controlTimer(self):
         # if timer is stopped
@@ -190,10 +188,6 @@ class VideoInterview(QMainWindow):
                                                     "                                                border-radius:10px;\n"
                                                     "                                                border-color:grey;\n"
                                                     "                                                font:16px bold;}")
-
-
-
-
 def start_AudioRecording():
     global audio_thread
 
@@ -202,8 +196,6 @@ def start_AudioRecording():
     audio_thread.start()
 def stop_AudioRecording():
     audio_thread.stop()
-
-
 def start_VideoRecording():
     global video_thread
 

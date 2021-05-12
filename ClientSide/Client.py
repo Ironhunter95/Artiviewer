@@ -8,10 +8,10 @@ from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTi
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
 from PySide2.QtWidgets import *
 # GUI FILE
-from Client_ui_main import Ui_MainWindow
+from Client_ui_main import ClientUIMain
 
 # IMPORT QSS CUSTOM
-from Client_ui_styles import Style
+from Client_ui_styles import ClientStyles
 
 # IMPORT FUNCTIONS
 from Client_ui_functions import *
@@ -19,23 +19,23 @@ from Client_ui_functions import *
 ## ==> APP FUNCTIONS
 from Client_app_functions import *
 
-class MainWindow(QMainWindow):
+class ClientWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
-        self.ui = Ui_MainWindow()
+        self.ui = ClientUIMain()
         self.ui.setupUi(self)
         ########################################################################
         ## START - WINDOW ATTRIBUTES
         ########################################################################
 
         ## REMOVE ==> STANDARD TITLE BAR
-        UIFunctions.removeTitleBar(True)
+        ClientUIFunctions.removeTitleBar(True)
         ## ==> END ##
 
         ## SET ==> WINDOW TITLE
         self.setWindowTitle('Artiviewer - Client')
-        UIFunctions.labelTitle(self, 'Artiviewer - Client')
-        UIFunctions.labelDescription(self, 'Client')
+        ClientUIFunctions.labelTitle(self, 'Artiviewer - Client')
+        ClientUIFunctions.labelDescription(self, 'Client')
         ## ==> END ##
 
         ## WINDOW SIZE ==> DEFAULT SIZE
@@ -49,18 +49,18 @@ class MainWindow(QMainWindow):
         ########################################################################
 
         ## ==> TOGGLE MENU SIZE
-        self.ui.btn_toggle_menu.clicked.connect(lambda: UIFunctions.toggleMenu(self, 220, True))
+        self.ui.btn_toggle_menu.clicked.connect(lambda: ClientUIFunctions.toggleMenu(self, 220, True))
         ## ==> END ##
 
         ## ==> ADD CUSTOM MENUS
         self.ui.stackedWidget.setMinimumWidth(20)
-        UIFunctions.addNewMenu(self, "Home", "btn_home", "url(:/16x16/icons/16x16/cil-home.png)", True)
-        UIFunctions.addNewMenu(self, "Account", "btn_new_user", "url(:/16x16/icons/16x16/cil-user-follow.png)", True)
-        UIFunctions.addNewMenu(self, "Custom Widgets", "btn_widgets", "url(:/16x16/icons/16x16/cil-equalizer.png)", False)
+        ClientUIFunctions.addNewMenu(self, "Home", "btn_home", "url(:/16x16/icons/16x16/cil-home.png)", True)
+        ClientUIFunctions.addNewMenu(self, "Account", "btn_new_user", "url(:/16x16/icons/16x16/cil-user-follow.png)", True)
+        ClientUIFunctions.addNewMenu(self, "Custom Widgets", "btn_widgets", "url(:/16x16/icons/16x16/cil-equalizer.png)", False)
         ## ==> END ##
 
         # START MENU => SELECTION
-        UIFunctions.selectStandardMenu(self, "btn_home")
+        ClientUIFunctions.selectStandardMenu(self, "btn_home")
         ## ==> END ##
 
         ## ==> START PAGE
@@ -68,7 +68,7 @@ class MainWindow(QMainWindow):
         ## ==> END ##
 
         ## USER ICON ==> SHOW HIDE
-        UIFunctions.userIcon(self, "MA", "", True)
+        ClientUIFunctions.userIcon(self, "MA", "", True)
         ## ==> END ##
 
 
@@ -76,8 +76,8 @@ class MainWindow(QMainWindow):
         ########################################################################
         def moveWindow(event):
             # IF MAXIMIZED CHANGE TO NORMAL
-            if UIFunctions.returStatus() == 1:
-                UIFunctions.maximize_restore(self)
+            if ClientUIFunctions.returnStatus() == 1:
+                ClientUIFunctions.maximize_restore(self)
 
             # MOVE WINDOW
             if event.buttons() == Qt.LeftButton:
@@ -91,7 +91,7 @@ class MainWindow(QMainWindow):
 
         ## ==> LOAD DEFINITIONS
         ########################################################################
-        UIFunctions.uiDefinitions(self)
+        ClientUIFunctions.uiDefinitions(self)
         ## ==> END ##
 
         ########################################################################
@@ -139,23 +139,23 @@ class MainWindow(QMainWindow):
         # PAGE HOME
         if btnWidget.objectName() == "btn_home":
             self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
-            UIFunctions.resetStyle(self, "btn_home")
-            UIFunctions.labelPage(self, "Home")
-            btnWidget.setStyleSheet(UIFunctions.selectMenu(btnWidget.styleSheet()))
+            ClientUIFunctions.resetStyle(self, "btn_home")
+            ClientUIFunctions.labelPage(self, "Home")
+            btnWidget.setStyleSheet(ClientUIFunctions.selectMenu(btnWidget.styleSheet()))
 
         # PAGE NEW USER
         if btnWidget.objectName() == "btn_new_user":
             self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
-            UIFunctions.resetStyle(self, "btn_new_user")
-            UIFunctions.labelPage(self, "New User")
-            btnWidget.setStyleSheet(UIFunctions.selectMenu(btnWidget.styleSheet()))
+            ClientUIFunctions.resetStyle(self, "btn_new_user")
+            ClientUIFunctions.labelPage(self, "New User")
+            btnWidget.setStyleSheet(ClientUIFunctions.selectMenu(btnWidget.styleSheet()))
 
         # PAGE WIDGETS
         if btnWidget.objectName() == "btn_widgets":
             self.ui.stackedWidget.setCurrentWidget(self.ui.page_widgets)
-            UIFunctions.resetStyle(self, "btn_widgets")
-            UIFunctions.labelPage(self, "Custom Widgets")
-            btnWidget.setStyleSheet(UIFunctions.selectMenu(btnWidget.styleSheet()))
+            ClientUIFunctions.resetStyle(self, "btn_widgets")
+            ClientUIFunctions.labelPage(self, "Custom Widgets")
+            btnWidget.setStyleSheet(ClientUIFunctions.selectMenu(btnWidget.styleSheet()))
 
     ## ==> END ##
 
@@ -185,7 +185,7 @@ class MainWindow(QMainWindow):
     ## EVENT ==> RESIZE EVENT
     ########################################################################
     def resizeEvent(self, event):
-        return super(MainWindow, self).resizeEvent(event)
+        return super(ClientWindow, self).resizeEvent(event)
 
     ## ==> END ##
 
@@ -197,5 +197,5 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     QtGui.QFontDatabase.addApplicationFont('fonts/segoeui.ttf')
     QtGui.QFontDatabase.addApplicationFont('fonts/segoeuib.ttf')
-    window = MainWindow()
+    window = ClientWindow()
     sys.exit(app.exec_())

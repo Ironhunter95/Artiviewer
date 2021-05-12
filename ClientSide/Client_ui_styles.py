@@ -1,4 +1,4 @@
-class Style():
+class ClientStyles():
 
     style_bt_standard = (
     """

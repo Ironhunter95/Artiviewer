@@ -1,7 +1,7 @@
 
 ## ==> GUI FILE
-from ClientSide.Client import MainWindow
+from ClientSide.Client import ClientWindow
 from Client import *
 
-class Functions(MainWindow):
+class ClientFunctions(ClientWindow):
     pass

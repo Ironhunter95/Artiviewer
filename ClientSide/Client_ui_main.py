@@ -22,7 +22,7 @@ from ClientSide import addInterviewForm
 from ClientSide.VideoInterview import VideoInterview
 
 
-class Ui_MainWindow(object):
+class ClientUIMain(object):
     sheetname = "0-Graduate Software Developer"
     def setupUi(self, MainWindow):
         if MainWindow.objectName():
@@ -1470,7 +1470,7 @@ class Ui_MainWindow(object):
             self.w = None  # Discard reference.
     def createNewInterview(self):
          self.window = QtWidgets.QMainWindow()
-         self.ui = addInterviewForm.Ui_AddNewInterview()
+         self.ui = addInterviewForm.addInterviewForm()
          self.ui.setupUi(self.window)
          self.window.show()
     def drilldownclick(self, clientname):
