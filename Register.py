@@ -8,7 +8,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 import Login
 
-class Ui_RegisterWindow(object):
+class Register(object):
     def setupUi(self, RegisterWindow):
         # Remove Title Bar
         RegisterWindow.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -209,7 +209,6 @@ class Ui_RegisterWindow(object):
         self.loginButton.clicked.connect(self.checkRegDetails)
         self.retranslateUi(RegisterWindow)
         QtCore.QMetaObject.connectSlotsByName(RegisterWindow)
-
     def retranslateUi(self, LoginWindow):
         _translate = QtCore.QCoreApplication.translate
         LoginWindow.setWindowTitle(_translate("LoginWindow", "Register - Artiviewer "))
@@ -223,12 +222,11 @@ class Ui_RegisterWindow(object):
         self.label_7.setText(_translate("LoginWindow", "Already have an account?"))
         self.label_8.setText(_translate("LoginWindow", "Confirm Password"))
         self.label_9.setText(_translate("LoginWindow", "Email"))
-
     def close(self):
         app.quit()
-    def Login(self, checked):
+    def Login(self):
         self.window = QtWidgets.QMainWindow()
-        self.ui = Login.Ui_LoginWindow()
+        self.ui = Login.Login()
         self.ui.setupUi(self.window)
         RegisterWindow.destroy()
         self.window.show()
@@ -308,10 +306,11 @@ class Ui_RegisterWindow(object):
                     errorBox.setIcon(QMessageBox.Information)
                     show = errorBox.exec_()
                     self.Login()
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     RegisterWindow = QtWidgets.QMainWindow()
-    ui = Ui_RegisterWindow()
+    ui = Register()
     ui.setupUi(RegisterWindow)
     RegisterWindow.show()
     sys.exit(app.exec_())

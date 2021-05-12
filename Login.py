@@ -6,7 +6,7 @@ import hashlib
 import Register
 
 
-class Ui_LoginWindow(object):
+class Login(object):
     def setupUi(self, LoginWindow):
         #Remove Title Bar
         LoginWindow.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -191,13 +191,12 @@ class Ui_LoginWindow(object):
         self.forgotPasswordButton.setText(_translate("LoginWindow", "Forgot password?"))
     def close(self):
         app.quit()
-    def Register(self, checked):
+    def Register(self):
         self.window = QtWidgets.QMainWindow()
-        self.ui = Register.Ui_RegisterWindow()
+        self.ui = Register.Register()
         self.ui.setupUi(self.window)
         LoginWindow.hide()
         self.window.show()
-
     def checkDetails(self):
         usernameexist = True
         passwordexist = True
@@ -261,7 +260,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     LoginWindow = QtWidgets.QMainWindow()
-    ui = Ui_LoginWindow()
+    ui = Login()
     ui.setupUi(LoginWindow)
     LoginWindow.show()
     sys.exit(app.exec_())
