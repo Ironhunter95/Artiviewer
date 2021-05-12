@@ -14,7 +14,7 @@ import gspread
 import files_rc
 
 
-class Ui_MainWindow(object):
+class AdminUIMain(object):
     sheetname = "0-Graduate Software Developer"
     def setupUi(self, MainWindow):
         if MainWindow.objectName():

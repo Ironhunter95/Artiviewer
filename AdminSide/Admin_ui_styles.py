@@ -1,4 +1,4 @@
-class Style():
+class AdminStyles():
 
     style_bt_standard = (
     """

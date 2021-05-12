@@ -9,7 +9,7 @@ GLOBAL_TITLE_BAR = True
 ## ==> COUT INITIAL MENU
 count = 1
 
-class UIFunctions(MainWindow):
+class AdminUIFunctions(AdminWindow):
 
     ## ==> GLOBALS
     GLOBAL_STATE = 0
@@ -43,7 +43,7 @@ class UIFunctions(MainWindow):
             self.ui.frame_size_grip.show()
 
     ## ==> RETURN STATUS
-    def returStatus():
+    def returnStatus():
         return GLOBAL_STATE
 
     ## ==> SET STATUS
@@ -114,7 +114,7 @@ class UIFunctions(MainWindow):
         button.setMinimumSize(QSize(0, 70))
         button.setLayoutDirection(Qt.LeftToRight)
         button.setFont(font)
-        button.setStyleSheet(Style.style_bt_standard.replace('ICON_REPLACE', icon))
+        button.setStyleSheet(AdminStyles.style_bt_standard.replace('ICON_REPLACE', icon))
         button.setText(name)
         button.setToolTip(name)
         button.clicked.connect(self.Button)
@@ -140,13 +140,13 @@ class UIFunctions(MainWindow):
     def selectStandardMenu(self, widget):
         for w in self.ui.frame_left_menu.findChildren(QPushButton):
             if w.objectName() == widget:
-                w.setStyleSheet(UIFunctions.selectMenu(w.styleSheet()))
+                w.setStyleSheet(AdminUIFunctions.selectMenu(w.styleSheet()))
 
     ## ==> RESET SELECTION
     def resetStyle(self, widget):
         for w in self.ui.frame_left_menu.findChildren(QPushButton):
             if w.objectName() != widget:
-                w.setStyleSheet(UIFunctions.deselectMenu(w.styleSheet()))
+                w.setStyleSheet(AdminUIFunctions.deselectMenu(w.styleSheet()))
 
     ## ==> CHANGE PAGE LABEL TEXT
     def labelPage(self, text):
@@ -185,7 +185,7 @@ class UIFunctions(MainWindow):
         def dobleClickMaximizeRestore(event):
             # IF DOUBLE CLICK CHANGE STATUS
             if event.type() == QtCore.QEvent.MouseButtonDblClick:
-                QtCore.QTimer.singleShot(250, lambda: UIFunctions.maximize_restore(self))
+                QtCore.QTimer.singleShot(250, lambda: AdminUIFunctions.maximize_restore(self))
 
         ## REMOVE ==> STANDARD TITLE BAR
         if GLOBAL_TITLE_BAR:
@@ -217,7 +217,7 @@ class UIFunctions(MainWindow):
         self.ui.btn_minimize.clicked.connect(lambda: self.showMinimized())
 
         ## ==> MAXIMIZE/RESTORE
-        self.ui.btn_maximize_restore.clicked.connect(lambda: UIFunctions.maximize_restore(self))
+        self.ui.btn_maximize_restore.clicked.connect(lambda: AdminUIFunctions.maximize_restore(self))
 
         ## SHOW ==> CLOSE APPLICATION
         self.ui.btn_close.clicked.connect(lambda: self.close())

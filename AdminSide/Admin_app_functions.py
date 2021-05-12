@@ -1,7 +1,7 @@
 
 ## ==> GUI FILE
-from AdminSide.Admin import MainWindow
+from AdminSide.Admin import AdminWindow
 from Admin import *
 
-class Functions(MainWindow):
+class AdminFunctions(AdminWindow):
     pass
