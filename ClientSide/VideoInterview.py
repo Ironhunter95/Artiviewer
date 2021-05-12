@@ -15,6 +15,7 @@ from keras.models import load_model
 from VideoRecorder import VideoRecorder
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread
+import speech_recognition as sr
 
 class VideoInterview(QMainWindow):
     def __init__(self):
@@ -107,7 +108,18 @@ class VideoInterview(QMainWindow):
         # set control_bt callback clicked  function
         self.startRecordingButton.clicked.connect(self.controlTimer)
         self.nextQuestionButton.clicked.connect(self.nextQuestion)
+    def transcribeAudio(self):
+        r=sr.Recognizer()
+        Wav = sr.AudioFile('temp_audio.wav')
+        with Wav as source:
+            audio = r.record(source)
+        val = r.recognize_google(audio)
+        Answers = open("answers.txt", "a")  # append mode
+        currentAnswer = ("Question "+str(self.Question_Index + 1) +": " + self.Questions[self.Question_Index] + "\n" + "Answer: " + val +"\n")
+        Answers.write(currentAnswer)
+        Answers.close()
     def nextQuestion(self):
+        self.transcribeAudio()
         if self.Question_Index == 4:
             self.close()
         self.startRecordingButton.setEnabled(True)
