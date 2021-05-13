@@ -25,6 +25,7 @@ class VideoInterview(QMainWindow):
         creds = ServiceAccountCredentials.from_json_keyfile_name("GoogleCreds.json", scope)
         client = gspread.authorize(creds)
         Sheet = client.open("Active Interviews").sheet1
+        #Get Questions list
         Questions = Sheet.row_values(2)
         self.Questions=Questions[6:]
         self.Question_Index = 0
@@ -108,6 +109,7 @@ class VideoInterview(QMainWindow):
         # set control_bt callback clicked  function
         self.startRecordingButton.clicked.connect(self.controlTimer)
         self.nextQuestionButton.clicked.connect(self.nextQuestion)
+        #Transcribes interview questions from recordings and prints to txt file
     def transcribeAudio(self):
         r=sr.Recognizer()
         Wav = sr.AudioFile('temp_audio.wav')
@@ -118,6 +120,7 @@ class VideoInterview(QMainWindow):
         currentAnswer = ("Question "+str(self.Question_Index + 1) +": " + self.Questions[self.Question_Index] + "\n" + "Answer: " + val +"\n")
         Answers.write(currentAnswer)
         Answers.close()
+        #Navigates to next questions and modifies the buttons while doing so
     def nextQuestion(self):
         self.transcribeAudio()
         if self.Question_Index == 4:
@@ -148,6 +151,7 @@ class VideoInterview(QMainWindow):
         self.questionTitle.setText(self.Questions[self.Question_Index])
         if self.Question_Index==4:
             self.nextQuestionButton.setText("End Interview")
+    #Displays Confirmation message before quitting
     def cancelInterview(self):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Critical)
@@ -158,13 +162,14 @@ class VideoInterview(QMainWindow):
         msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         msg.buttonClicked.connect(self.msgbtn)
         retval = msg.exec_()
+    #Checks confirmation message response
     def msgbtn(self,i):
         if i.text()[1] == 'Y':
             self.close()
-    # view camera
+    # Dummy function
     def dummy(self):
         pass
-    # start/stop timer
+    # start/stop timer and starts/stops Audio/Video recording
     def controlTimer(self):
         # if timer is stopped
         if not self.timer.isActive():

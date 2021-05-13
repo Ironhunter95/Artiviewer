@@ -1,0 +1,11 @@
+
+Question 1: Tell us about yourself
+Answer: My name is Mohammed Aboukhatwa, I am a third year Computer Science student at Cardiff Met
+Question 2: What makes you a great fit for this company?
+Answer: I am very hard working and like to challenge myself
+Question 3: What are your strengths?
+Answer: I am very detail oriented, I work well in a team and I have experience leading others
+Question 4: What are your weaknesses?
+Answer: I sometimes work too much that it affects my free time
+Question 5: Why did you leave your last job?
+Answer: They wanted me to break the law

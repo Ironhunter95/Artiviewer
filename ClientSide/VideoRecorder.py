@@ -9,7 +9,7 @@ class VideoRecorder():
 
     # Video class based on openCV
     def __init__(self):
-
+        #initizalize variables
         self.open = True
         self.device_index = 0
         self.fps = 30  # fps should be the minimum constant rate at which the camera can

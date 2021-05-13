@@ -8,7 +8,7 @@ class AudioRecorder():
 
     # Audio class based on pyAudio and Wave
     def __init__(self):
-
+        #Setup necessary variables
         self.open = True
         self.rate = 44100
         self.frames_per_buffer = 1024
