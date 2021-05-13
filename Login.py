@@ -11,7 +11,7 @@ class Login(object):
         #Remove Title Bar
         LoginWindow.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         LoginWindow.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        #
+        #Setup UI of the form
         LoginWindow.setObjectName("LoginWindow")
         LoginWindow.resize(438, 600)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -170,8 +170,11 @@ class Login(object):
                                                 "QPushButton:hover{\n"
                                                 "color: rgb(233,151,0)\n"
                                                 "}")
+        #Close app button
         self.exit.clicked.connect(self.close)
+        #Login button checks details of login
         self.loginButton.clicked.connect(self.checkDetails)
+        #Navigate to Register Window
         self.registerButton.clicked.connect(self.Register)
         self.forgotPasswordButton.setObjectName("forgotPasswordButton")
         LoginWindow.setCentralWidget(self.centralwidget)
@@ -201,6 +204,7 @@ class Login(object):
         usernameexist = True
         passwordexist = True
         errorBox = QMessageBox()
+        #Checks if there is a username and password
         if self.usernameField.toPlainText() == '':
             usernameexist = False
         if self.passwordField.text() == '':
@@ -227,6 +231,7 @@ class Login(object):
             creds = ServiceAccountCredentials.from_json_keyfile_name("GoogleCreds.json", scope)
             client = gspread.authorize(creds)
             Sheet = client.open("User Accounts").sheet1
+            #Retrieve all usernames
             UsernameList = Sheet.col_values(1)
             username = self.usernameField.toPlainText()
             # Loop to check if username exists
@@ -238,6 +243,7 @@ class Login(object):
                     password= password.encode("utf-8")
                     password=hashlib.md5(password)
                     password=password.hexdigest()
+                    #Hashes the password to compare with stored hashed password
                     if (hashedpassword == password):
                         errorBox.setWindowTitle("Information")
                         errorBox.setText(

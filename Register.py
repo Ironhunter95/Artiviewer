@@ -9,6 +9,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import Login
 
 class Register(object):
+    #Setup UI of the form
     def setupUi(self, RegisterWindow):
         # Remove Title Bar
         RegisterWindow.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -203,9 +204,9 @@ class Register(object):
         RegisterWindow.setCentralWidget(self.centralwidget)
 
         self.exit.clicked.connect(self.close)
-        #Here register is the login button
+        #Here register is the login button and navigates to Login window
         self.registerButton.clicked.connect(self.Login)
-        #Here Login is the register button
+        #Here Login is the register button and checks registration details
         self.loginButton.clicked.connect(self.checkRegDetails)
         self.retranslateUi(RegisterWindow)
         QtCore.QMetaObject.connectSlotsByName(RegisterWindow)
@@ -236,6 +237,7 @@ class Register(object):
         password1Exist = True
         password2Exist = True
         errorBox = QMessageBox()
+        #Checks if any field is missing
         if self.usernameField.toPlainText() == '':
             usernameExist = False
         if self.emailField.toPlainText() == '':
@@ -276,11 +278,13 @@ class Register(object):
                 creds = ServiceAccountCredentials.from_json_keyfile_name("GoogleCreds.json", scope)
                 client = gspread.authorize(creds)
                 Sheet = client.open("User Accounts").sheet1
+                #Retrieves all Usernames and emails
                 UsernameList = Sheet.col_values(1)
                 emailList = Sheet.col_values(3)
                 username = self.usernameField.toPlainText()
                 email = self.emailField.toPlainText()
                 email = email.lower()
+                #Checks to see if a similar username or email exist
                 if username in UsernameList:
                     errorBox.setWindowTitle("Error")
                     errorBox.setText(
