@@ -1,12 +1,12 @@
 
-## ==> GUI FILE
+#GUI FILE
 from Admin import *
 
-## ==> GLOBALS
+#GLOBALS
 GLOBAL_STATE = 0
 GLOBAL_TITLE_BAR = True
 
-## ==> COUT INITIAL MENU
+#COUT INITIAL MENU
 count = 1
 
 class AdminUIFunctions(AdminWindow):
@@ -15,12 +15,6 @@ class AdminUIFunctions(AdminWindow):
     GLOBAL_STATE = 0
     GLOBAL_TITLE_BAR = True
 
-    ########################################################################
-    ## START - GUI FUNCTIONS
-    ########################################################################
-
-    ## ==> MAXIMIZE/RESTORE
-    ########################################################################
     def maximize_restore(self):
         global GLOBAL_STATE
         status = GLOBAL_STATE
@@ -42,17 +36,16 @@ class AdminUIFunctions(AdminWindow):
             self.ui.frame_top_btns.setStyleSheet("background-color: rgba(27, 29, 35, 200)")
             self.ui.frame_size_grip.show()
 
-    ## ==> RETURN STATUS
+    #RETURN STATUS
     def returnStatus():
         return GLOBAL_STATE
 
-    ## ==> SET STATUS
+    #SET STATUS
     def setStatus(status):
         global GLOBAL_STATE
         GLOBAL_STATE = status
 
-    ## ==> ENABLE MAXIMUM SIZE
-    ########################################################################
+    #ENABLE MAXIMUM SIZE
     def enableMaximumSize(self, width, height):
         if width != '' and height != '':
             self.setMaximumSize(QSize(width, height))
@@ -60,8 +53,7 @@ class AdminUIFunctions(AdminWindow):
             self.ui.btn_maximize_restore.hide()
 
 
-    ## ==> TOGGLE MENU
-    ########################################################################
+    #TOGGLE MENU
     def toggleMenu(self, maxWidth, enable):
         if enable:
             # GET WIDTH
@@ -83,14 +75,12 @@ class AdminUIFunctions(AdminWindow):
             self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
             self.animation.start()
 
-    ## ==> SET TITLE BAR
-    ########################################################################
+    #SET TITLE BAR
     def removeTitleBar(status):
         global GLOBAL_TITLE_BAR
         GLOBAL_TITLE_BAR = status
 
-    ## ==> HEADER TEXTS
-    ########################################################################
+    #HEADER TEXTS
     # LABEL TITLE
     def labelTitle(self, text):
         self.ui.label_title_bar_top.setText(text)
@@ -99,8 +89,7 @@ class AdminUIFunctions(AdminWindow):
     def labelDescription(self, text):
         self.ui.label_top_info_1.setText(text)
 
-    ## ==> DYNAMIC MENUS
-    ########################################################################
+    #DYNAMIC MENUS
     def addNewMenu(self, name, objName, icon, isTopMenu):
         font = QFont()
         font.setFamily(u"Segoe UI")
@@ -124,37 +113,34 @@ class AdminUIFunctions(AdminWindow):
         else:
             self.ui.layout_menu_bottom.addWidget(button)
 
-    ## ==> SELECT/DESELECT MENU
-    ########################################################################
-    ## ==> SELECT
+    # SELECT Menu
     def selectMenu(getStyle):
         select = getStyle + ("QPushButton { border-right: 7px solid rgb(233, 151, 0); }")
         return select
 
-    ## ==> DESELECT
+    #DESELECT Menu
     def deselectMenu(getStyle):
         deselect = getStyle.replace("QPushButton { border-right: 7px solid rgb(233, 151, 0); }", "")
         return deselect
 
-    ## ==> START SELECTION
+    #START SELECTION
     def selectStandardMenu(self, widget):
         for w in self.ui.frame_left_menu.findChildren(QPushButton):
             if w.objectName() == widget:
                 w.setStyleSheet(AdminUIFunctions.selectMenu(w.styleSheet()))
 
-    ## ==> RESET SELECTION
+    #RESET SELECTION
     def resetStyle(self, widget):
         for w in self.ui.frame_left_menu.findChildren(QPushButton):
             if w.objectName() != widget:
                 w.setStyleSheet(AdminUIFunctions.deselectMenu(w.styleSheet()))
 
-    ## ==> CHANGE PAGE LABEL TEXT
+    #CHANGE PAGE LABEL TEXT
     def labelPage(self, text):
         newText = '| ' + text.upper()
         self.ui.label_top_info_2.setText(newText)
 
-    ## ==> USER ICON
-    ########################################################################
+    #USER ICON
     def userIcon(self, initialsTooltip, icon, showHide):
         if showHide:
             # SET TEXT
@@ -170,24 +156,13 @@ class AdminUIFunctions(AdminWindow):
         else:
             self.ui.label_user_icon.hide()
 
-    ########################################################################
-    ## END - GUI FUNCTIONS
-    ########################################################################
-
-
-    ########################################################################
-    ## START - GUI DEFINITIONS
-    ########################################################################
-
-    ## ==> UI DEFINITIONS
-    ########################################################################
     def uiDefinitions(self):
         def dobleClickMaximizeRestore(event):
             # IF DOUBLE CLICK CHANGE STATUS
             if event.type() == QtCore.QEvent.MouseButtonDblClick:
                 QtCore.QTimer.singleShot(250, lambda: AdminUIFunctions.maximize_restore(self))
 
-        ## REMOVE ==> STANDARD TITLE BAR
+        #REMOVE STANDARD TITLE BAR
         if GLOBAL_TITLE_BAR:
             self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
             self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -201,7 +176,7 @@ class AdminUIFunctions(AdminWindow):
             self.ui.frame_size_grip.hide()
 
 
-        ## SHOW ==> DROP SHADOW
+        #SHOW DROP SHADOW
         self.shadow = QGraphicsDropShadowEffect(self)
         self.shadow.setBlurRadius(17)
         self.shadow.setXOffset(0)
@@ -209,20 +184,15 @@ class AdminUIFunctions(AdminWindow):
         self.shadow.setColor(QColor(0, 0, 0, 150))
         self.ui.frame_main.setGraphicsEffect(self.shadow)
 
-        ## ==> RESIZE WINDOW
+        #RESIZE WINDOW
         self.sizegrip = QSizeGrip(self.ui.frame_size_grip)
         self.sizegrip.setStyleSheet("width: 20px; height: 20px; margin 0px; padding: 0px;")
 
-        ### ==> MINIMIZE
+        #MINIMIZE
         self.ui.btn_minimize.clicked.connect(lambda: self.showMinimized())
 
-        ## ==> MAXIMIZE/RESTORE
+        #MAXIMIZE/RESTORE
         self.ui.btn_maximize_restore.clicked.connect(lambda: AdminUIFunctions.maximize_restore(self))
 
-        ## SHOW ==> CLOSE APPLICATION
+        #SHOW CLOSE APPLICATION
         self.ui.btn_close.clicked.connect(lambda: self.close())
-
-
-    ########################################################################
-    ## END - GUI DEFINITIONS
-    ########################################################################

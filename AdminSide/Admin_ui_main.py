@@ -1454,12 +1454,13 @@ class AdminUIMain(object):
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
+    #Navigates to interview dashboard
     def interview_click(self,interviewname):
         self.stackedWidget.setCurrentWidget(self.page_dashboard)
         self.label_top_info_2.setText(QCoreApplication.translate("MainWindow", u"| Dashboard", None))
         self.sheetname =interviewname
         print(self.sheetname)
-
+    #Navigates to new interview screen
     def createNewInterview(self):
         self.stackedWidget.setCurrentWidget(self.page_createInterview)
         self.label_top_info_2.setText(QCoreApplication.translate("MainWindow", u"| Create New Interview", None))

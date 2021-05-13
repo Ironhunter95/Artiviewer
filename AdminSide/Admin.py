@@ -14,7 +14,7 @@ from Admin_ui_styles import AdminStyles
 # IMPORT FUNCTIONS
 from Admin_ui_functions import *
 
-## ==> APP FUNCTIONS
+#App Functions
 from Admin_app_functions import *
 
 class AdminWindow(QMainWindow):
@@ -22,62 +22,41 @@ class AdminWindow(QMainWindow):
         QMainWindow.__init__(self)
         self.ui = AdminUIMain()
         self.ui.setupUi(self)
-        ########################################################################
-        ## START - WINDOW ATTRIBUTES
-        ########################################################################
 
-        ## REMOVE ==> STANDARD TITLE BAR
+        #Remove standard title bar
         AdminUIFunctions.removeTitleBar(True)
-        ## ==> END ##
 
-        ## SET ==> WINDOW TITLE
+        #Set Window title
         self.setWindowTitle('Artiviewer - Admin')
         AdminUIFunctions.labelTitle(self, 'Artiviewer - Admin')
         AdminUIFunctions.labelDescription(self, 'Admin')
-        ## ==> END ##
 
-        ## WINDOW SIZE ==> DEFAULT SIZE
+        # Default window size
         startSize = QSize(1000, 720)
         self.resize(startSize)
         self.setMinimumSize(startSize)
         # UIFunctions.enableMaximumSize(self, 500, 720)
-        ## ==> END ##
 
-        ## ==> CREATE MENUS
-        ########################################################################
-
-        ## ==> TOGGLE MENU SIZE
+        # Toggle Menu size
         self.ui.btn_toggle_menu.clicked.connect(lambda: AdminUIFunctions.toggleMenu(self, 220, True))
-        ## ==> END ##
 
-        ## ==> ADD CUSTOM MENUS
+        #Add Custome menu
         self.ui.stackedWidget.setMinimumWidth(20)
         AdminUIFunctions.addNewMenu(self, "Home", "btn_home", "url(:/16x16/icons/16x16/cil-home.png)", True)
         AdminUIFunctions.addNewMenu(self, "User Search", "btn_new_user", "url(:/16x16/icons/16x16/cil-user-follow.png)", True)
-        AdminUIFunctions.addNewMenu(self, "Custom Widgets", "btn_widgets", "url(:/16x16/icons/16x16/cil-equalizer.png)", False)
-        ## ==> END ##
-
-        # START MENU => SELECTION
+        AdminUIFunctions.addNewMenu(self, "Settings", "btn_widgets", "url(:/16x16/icons/16x16/cil-equalizer.png)", False)
+        # Start menu selection
         AdminUIFunctions.selectStandardMenu(self, "btn_home")
-        ## ==> END ##
-
-        ## ==> START PAGE
+        #Start page
         self.ui.stackedWidget.setCurrentWidget(self.ui.page_home)
-        ## ==> END ##
-
-        ## USER ICON ==> SHOW HIDE
+        # Show User icon
         AdminUIFunctions.userIcon(self, "MA", "", True)
-        ## ==> END ##
-
-
-        ## ==> MOVE WINDOW / MAXIMIZE / RESTORE
-        ########################################################################
         def moveWindow(event):
-            # IF MAXIMIZED CHANGE TO NORMAL
+            # If maximized change to normal
             if AdminUIFunctions.returnStatus() == 1:
                 AdminUIFunctions.maximize_restore(self)
 
-            # MOVE WINDOW
+            # Move window
             if event.buttons() == Qt.LeftButton:
                 self.move(self.pos() + event.globalPos() - self.dragPos)
                 self.dragPos = event.globalPos()
@@ -85,51 +64,15 @@ class AdminWindow(QMainWindow):
 
         # WIDGET TO MOVE
         self.ui.frame_label_top_btns.mouseMoveEvent = moveWindow
-        ## ==> END ##
 
-        ## ==> LOAD DEFINITIONS
-        ########################################################################
+        #LOAD DEFINITIONS
         AdminUIFunctions.uiDefinitions(self)
-        ## ==> END ##
 
-        ########################################################################
-        ## END - WINDOW ATTRIBUTES
-        ############################## ---/--/--- ##############################
-
-
-
-
-        ########################################################################
-        #                                                                      #
-        ## START -------------- WIDGETS FUNCTIONS/PARAMETERS ---------------- ##
-        #                                                                      #
-        ## ==> USER CODES BELLOW                                              ##
-        ########################################################################
-
-
-
-        ## ==> QTableWidget RARAMETERS
-        ########################################################################
         self.ui.tableWidget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        ## ==> END ##
 
-
-
-        ########################################################################
-        #                                                                      #
-        ## END --------------- WIDGETS FUNCTIONS/PARAMETERS ----------------- ##
-        #                                                                      #
-        ############################## ---/--/--- ##############################
-
-
-        ## SHOW ==> MAIN WINDOW
-        ########################################################################
+        ## SHOW MAIN WINDOW
         self.show()
-        ## ==> END ##
 
-    ########################################################################
-    ## MENUS ==> DYNAMIC MENUS FUNCTIONS
-    ########################################################################
     def Button(self):
         # GET BT CLICKED
         btnWidget = self.sender()
@@ -148,48 +91,23 @@ class AdminWindow(QMainWindow):
             AdminUIFunctions.labelPage(self, "Search for User")
             btnWidget.setStyleSheet(AdminUIFunctions.selectMenu(btnWidget.styleSheet()))
 
-        # PAGE WIDGETS
-        if btnWidget.objectName() == "btn_widgets":
-            self.ui.stackedWidget.setCurrentWidget(self.ui.page_widgets)
-            AdminUIFunctions.resetStyle(self, "btn_widgets")
-            AdminUIFunctions.labelPage(self, "Custom Widgets")
-            btnWidget.setStyleSheet(AdminUIFunctions.selectMenu(btnWidget.styleSheet()))
 
-    ## ==> END ##
-
-    ########################################################################
-    ## START ==> APP EVENTS
-    ########################################################################
-
-    ## EVENT ==> MOUSE DOUBLE CLICK
-    ########################################################################
     def eventFilter(self, watched, event):
         if watched == self.le and event.type() == QtCore.QEvent.MouseButtonDblClick:
             print("pos: ", event.pos())
-    ## ==> END ##
 
     ## EVENT ==> MOUSE CLICK
-    ########################################################################
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
-    ## ==> END ##
 
     ## EVENT ==> KEY PRESSED
-    ########################################################################
     def keyPressEvent(self, event):
         pass
-    ## ==> END ##
 
     ## EVENT ==> RESIZE EVENT
-    ########################################################################
     def resizeEvent(self, event):
         return super(AdminWindow, self).resizeEvent(event)
 
-    ## ==> END ##
-
-    ########################################################################
-    ## END ==> APP EVENTS
-    ############################## ---/--/--- ##############################
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
