@@ -1,0 +1,16 @@
+There are 4 main scripts that run the entire program.
+
+Register.py runs the register form to allow you to register and login with the new account
+
+Login.py runs the login form, however on successful login you will not be navigated to the main application
+
+Admin.py runs the admin side of the application
+
+Client.py runs the client side of the application.
+
+Since the software utilizes google documents as a database alternatives, here are the links for the google documents:
+
+Active Interviews sheet: https://docs.google.com/spreadsheets/d/1xSkPGNiADPRAPqfV4ZwFEltVyXgNtIuClLoXsP4RLOY/edit?usp=sharing
+User accounts sheet: https://docs.google.com/spreadsheets/d/1eixrLkSuyOj8kz6CGpJelyTgtefwBebSYI-1Lz_aIcw/edit?usp=sharing
+Graduate Software Developer Interview sheet: https://docs.google.com/spreadsheets/d/1dK6Qg9_bJC7PLUq7vrB1sLeCZThPsqqt3-hdc9sbzxE/edit?usp=sharing
+User sheet: https://docs.google.com/spreadsheets/d/1LjrJHQL-fLejNGW_tpZsg98nUJjner4XLe0CrwzWbVQ/edit?usp=sharing
